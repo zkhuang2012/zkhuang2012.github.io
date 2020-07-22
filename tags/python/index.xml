@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>python - Tag - zkhuang&#39;s Blog</title>
+        <link>https://zkhuang2012.github.io/tags/python/</link>
+        <description>python - Tag - zkhuang&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>zkhuang2012@gmail.com (zkhuang)</managingEditor>
+            <webMaster>zkhuang2012@gmail.com (zkhuang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 03 May 2020 23:28:06 &#43;0800</lastBuildDate><atom:link href="https://zkhuang2012.github.io/tags/python/" rel="self" type="application/rss+xml" /><item>
+    <title>关于生信软件的安装</title>
+    <link>https://zkhuang2012.github.io/install_intro/</link>
+    <pubDate>Sun, 03 May 2020 23:28:06 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://zkhuang2012.github.io/install_intro/</guid>
+    <description><![CDATA[大黄唠叨之生信软件安装]]></description>
+</item></channel>
+</rss>
