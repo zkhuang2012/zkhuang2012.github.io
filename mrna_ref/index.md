@@ -134,6 +134,10 @@ ALIGNLOC="${WRKDIR}/hisat2"
 BALLGOWNLOC="${WRKDIR}/ballgown"
 TEMPLOC="${WRKDIR}/tmp"
 
+reads1=(${FASTQLOC}/*_1.*)
+reads1=("${reads1[@]##*/}")
+reads2=("${reads1[@]/_1./_2.}")
+
 cd $WRKDIR
 
 echo [`date +"%Y-%m-%d %H:%M:%S"`] "#> START: STRINGTIE Estimation"
@@ -166,6 +170,7 @@ for ((i=0; i<=${#reads1[@]}-1; i++ )); do
 done
 
 # Generate transcript_count_matrix.csv and gene_count_matrix.csv using the script under stringtie_install_dir
+
 python2 /public/tools/rna_seq/stringtie-1.3.4/prepDE.py -l 150
 
 echo [`date +"%Y-%m-%d %H:%M:%S"`] "#> Step Three: Estimation Finished!"
