@@ -32,7 +32,7 @@
                 "url": "https:\/\/zkhuang2012.github.io\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "Linux, HISAT2, RNA-seq","wordcount":  901 ,
+            },"genre": "posts","keywords": "Linux, HISAT2, RNA-seq","wordcount":  915 ,
         "url": "https:\/\/zkhuang2012.github.io\/mrna_ref\/","datePublished": "2020-05-08T21:30:50+08:00","dateModified": "2020-07-23T01:25:03+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "zkhuang's Blog",
@@ -93,7 +93,7 @@
                                 <i class="far fa-folder fa-fw"></i>RNA-seq
                             </a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-05-08>2020-05-08</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 901 words&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 915 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>5 min&nbsp;</div>
         </div><div class="details toc" id="toc-static">
                 <div class="details-summary toc-title">
@@ -108,6 +108,7 @@
         <li><a href="#2nd-alignment">2nd, Alignment</a></li>
         <li><a href="#3rd-estimate-transcript-abundance">3rd, Estimate transcript abundance</a></li>
         <li><a href="#4th-differential-expression-analysis">4th, Differential expression analysis</a></li>
+        <li><a href="#5th-funtional-enrichment-analysis">5th, Funtional enrichment analysis</a></li>
       </ul>
     </li>
     <li><a href="#reference">Reference</a></li>
@@ -543,7 +544,7 @@ qsub 03estimation.pbs
 
 </code></pre></td></tr></table>
 </div>
-</div><p>5th, Funtional enrichment analysis</p>
+</div><h3 id="5th-funtional-enrichment-analysis">5th, Funtional enrichment analysis</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -589,11 +590,11 @@ qsub 03estimation.pbs
 <span class="n">cat</span> <span class="o">&lt;&lt;</span><span class="n">EOF</span> <span class="o">&gt;&gt;</span><span class="n">enrichment.R</span>
 
 <span class="n">sig_gene</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#34;./H_RvY.sig.csv&#34;</span><span class="p">,</span><span class="n">header</span> <span class="o">=</span> <span class="bp">T</span><span class="p">)</span>
-<span class="n">universe</span> <span class="o">&lt;-</span> <span class="nf">read.delim</span><span class="p">(</span><span class="s">&#34;/public/home/benthic/Data_benthic/practice/mRNA/Hdh_universe.txt&#34;</span><span class="p">)</span>
-<span class="n">go2gene</span> <span class="o">&lt;-</span> <span class="nf">read.delim</span><span class="p">(</span><span class="s">&#34;/public/home/benthic/Data_benthic/practice/mRNA/Hdh_go2gene.txt&#34;</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s">&#34;\t&#34;</span><span class="p">,</span><span class="n">header</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
-<span class="n">go2name</span> <span class="o">&lt;-</span> <span class="nf">read.delim</span><span class="p">(</span><span class="s">&#34;/public/home/benthic/Data_benthic/practice/mRNA/Hdh_go2term.txt&#34;</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s">&#34;\t&#34;</span><span class="p">,</span><span class="n">header</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
-<span class="n">map2gene</span> <span class="o">&lt;-</span> <span class="nf">read.delim</span><span class="p">(</span><span class="s">&#34;/public/home/benthic/Data_benthic/practice/mRNA/Hdh_map2gene.txt&#34;</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s">&#34;\t&#34;</span><span class="p">,</span><span class="n">header</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
-<span class="n">map2name</span> <span class="o">&lt;-</span> <span class="nf">read.delim</span><span class="p">(</span><span class="s">&#34;/public/home/benthic/Data_benthic/practice/mRNA/Hdh_map2term.txt&#34;</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s">&#34;\t&#34;</span><span class="p">,</span><span class="n">header</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+<span class="n">universe</span> <span class="o">&lt;-</span> <span class="nf">read.delim</span><span class="p">(</span><span class="s">&#34;/public/home/benthic/Data_benthic/practice/mRNA/Hdh_universe.txt&#34;</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s">&#34;\t&#34;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="bp">F</span><span class="p">)</span>
+<span class="n">go2gene</span> <span class="o">&lt;-</span> <span class="nf">read.delim</span><span class="p">(</span><span class="s">&#34;/public/home/benthic/Data_benthic/practice/mRNA/Hdh_go2gene.txt&#34;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#34;\t&#34;</span><span class="p">,</span><span class="n">header</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span><span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="bp">F</span><span class="p">)</span>
+<span class="n">go2name</span> <span class="o">&lt;-</span> <span class="nf">read.delim</span><span class="p">(</span><span class="s">&#34;/public/home/benthic/Data_benthic/practice/mRNA/Hdh_go2term.txt&#34;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#34;\t&#34;</span><span class="p">,</span><span class="n">header</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span><span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="bp">F</span><span class="p">)</span>
+<span class="n">map2gene</span> <span class="o">&lt;-</span> <span class="nf">read.delim</span><span class="p">(</span><span class="s">&#34;/public/home/benthic/Data_benthic/practice/mRNA/Hdh_map2gene.txt&#34;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#34;\t&#34;</span><span class="p">,</span><span class="n">header</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span><span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="bp">F</span><span class="p">)</span>
+<span class="n">map2name</span> <span class="o">&lt;-</span> <span class="nf">read.delim</span><span class="p">(</span><span class="s">&#34;/public/home/benthic/Data_benthic/practice/mRNA/Hdh_map2term.txt&#34;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#34;\t&#34;</span><span class="p">,</span><span class="n">header</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span><span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="bp">F</span><span class="p">)</span>
 
 <span class="nf">library</span><span class="p">(</span><span class="s">&#34;clusterProfiler&#34;</span><span class="p">)</span>
 

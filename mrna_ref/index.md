@@ -226,17 +226,17 @@ Rscript deseq.R
 
 ```
 
-5th, Funtional enrichment analysis
+### 5th, Funtional enrichment analysis
 ```R
 
 cat <<EOF >>enrichment.R
 
 sig_gene <- read.csv("./H_RvY.sig.csv",header = T)
-universe <- read.delim("/public/home/benthic/Data_benthic/practice/mRNA/Hdh_universe.txt")
-go2gene <- read.delim("/public/home/benthic/Data_benthic/practice/mRNA/Hdh_go2gene.txt",sep="\t",header = FALSE)
-go2name <- read.delim("/public/home/benthic/Data_benthic/practice/mRNA/Hdh_go2term.txt",sep="\t",header = FALSE)
-map2gene <- read.delim("/public/home/benthic/Data_benthic/practice/mRNA/Hdh_map2gene.txt",sep="\t",header = FALSE)
-map2name <- read.delim("/public/home/benthic/Data_benthic/practice/mRNA/Hdh_map2term.txt",sep="\t",header = FALSE)
+universe <- read.delim("/public/home/benthic/Data_benthic/practice/mRNA/Hdh_universe.txt",sep="\t",header=FALSE,stringsAsFactors = F)
+go2gene <- read.delim("/public/home/benthic/Data_benthic/practice/mRNA/Hdh_go2gene.txt", sep="\t",header = FALSE,stringsAsFactors = F)
+go2name <- read.delim("/public/home/benthic/Data_benthic/practice/mRNA/Hdh_go2term.txt", sep="\t",header = FALSE,stringsAsFactors = F)
+map2gene <- read.delim("/public/home/benthic/Data_benthic/practice/mRNA/Hdh_map2gene.txt", sep="\t",header = FALSE,stringsAsFactors = F)
+map2name <- read.delim("/public/home/benthic/Data_benthic/practice/mRNA/Hdh_map2term.txt", sep="\t",header = FALSE,stringsAsFactors = F)
 
 library("clusterProfiler")
 
