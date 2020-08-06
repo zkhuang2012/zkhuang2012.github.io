@@ -112,8 +112,8 @@ LOCAL_GCC_PATH=/public/tools/devtools/gcc-7.2.0/
 export PATH=\$LOCAL_GCC_PATH/bin:\$PATH
 export C_INCLUDE_PATH=\$LOCAL_GCC_PATH/lib:\$LD_LIBRARY_PATH
 export CPLUS_INCLUDE_PATH=\$LOCAL_GCC_PATH/lib64:\$LD_LIBRARY_PATH
-export CFLAGS=-I\$LOCAL_GCC_PATH\include:\$CFLAGS
-export LDFLAGS=-L\$LOCAL_GCC_PATH\lib64:\$LDFLAGS
+export CFLAGS=-I\$LOCAL_GCC_PATH/include:\$CFLAGS
+export LDFLAGS=-L\$LOCAL_GCC_PATH/lib64:-L\$LOCAL_GCC_PATH/lib:\$LDFLAGS
 export LD_LIBRARY_PATH=\$LOCAL_GCC_PATH/lib64:\$LD_LIBRARY_PATH
 export LD_RUN_PATH=\$LOCAL_GCC_PATH/lib64:\$LD_RUN_PATH
 export LIBRARY_PATH=\$LOCAL_GCC_PATH/lib64:\$LIBRARY_PATH
@@ -183,7 +183,7 @@ source $HOME/.bashrc
 
 ```
 # 下载软件安装包
-axel -p -o $HOME/download https://www.python.org/ftp/python/3.6.10/Python-3.6.10.tgz
+axel -a -o $HOME/download https://www.python.org/ftp/python/3.6.10/Python-3.6.10.tgz
 # 解压压缩包
 tar -xvzf $HOME/download/Python-3.6.10.tgz -C $LOCAL_APP/
 # 安装
