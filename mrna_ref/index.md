@@ -29,9 +29,10 @@ done
 ### 2nd, Alignment
 ```shell
 cd ${HOME}/project/mRNA/bin
+```
+Copy the codes below to **02alignment.pbs**
 
-cat <<EOF >> 02alignment.pbs
-
+```shell
 #!/bin/bash -x
 #PBS -N ref_mRNA_02alignment
 #PBS -o ref_mRNA_02alignment.out
@@ -43,10 +44,10 @@ cat <<EOF >> 02alignment.pbs
 NUMCPUS=`wc -l <$PBS_NODEFILE`
 THREADS=`expr ${NUMCPUS} \* 2`
 BASEDIR="${HOME}/project/mRNA"
-FASTQLOC="$BASEDIR/data/samples"
-GENOMEIDX="$BASEDIR/data/index/Hdh_tran"
-GTFFILE="$BASEDIR/data/genes/Hdh.gtf"
-GENOMEFA="$BASEDIR/data/genome/Hdh.fa"
+FASTQLOC="${BASEDIR}/data/samples"
+GENOMEIDX="${BASEDIR}/data/index/Hdh_tran"
+GTFFILE="${BASEDIR}/data/genes/Hdh.gtf"
+GENOMEFA="${BASEDIR}/data/genome/Hdh.fa"
 WRKDIR="${BASEDIR}/output"
 ALIGNLOC="${WRKDIR}/hisat2"
 BALLGOWNLOC="${WRKDIR}/ballgown"
@@ -70,7 +71,7 @@ reads1=("${reads1[@]##*/}")
 reads2=("${reads1[@]/_1./_2.}")
 
 
-cd $WRKDIR
+cd ${WRKDIR}
 
 echo [`date +"%Y-%m-%d %H:%M:%S"`] "#> START: HISAT2 Alignment"
 for ((i=0; i<=${#reads1[@]}-1; i++ )); do
@@ -103,17 +104,20 @@ echo [`date +"%Y-%m-%d %H:%M:%S"`] "   * Assemble transcripts (StringTie)"
 done
 
 echo [`date +"%Y-%m-%d %H:%M:%S"`] "#> Step Two : Alignment Finished!"
+```
 
-EOF
+Then run via PBS:
 
+```shell
 qsub 02alignment.pbs
+
 ```
 
 ### 3rd, Estimate transcript abundance
 
-```shell
-cat <<EOF >> 03estimation.pbs
+Copy the codes below to **03estimation.pbs**
 
+```shell
 #!/bin/bash -x
 #PBS -N ref_mRNA_03estimation
 #PBS -o ref_mRNA_03estimation.out
@@ -125,10 +129,10 @@ cat <<EOF >> 03estimation.pbs
 NUMCPUS=`wc -l <$PBS_NODEFILE`
 THREADS=`expr ${NUMCPUS} \* 2`
 BASEDIR="${HOME}/project/mRNA"
-FASTQLOC="$BASEDIR/data/samples"
-GENOMEIDX="$BASEDIR/data/index/Hdh_tran"
-GTFFILE="$BASEDIR/data/genes/Hdh.gtf"
-GENOMEFA="$BASEDIR/data/genome/Hdh.fa"
+FASTQLOC="${BASEDIR}/data/samples"
+GENOMEIDX="${BASEDIR}/data/index/Hdh_tran"
+GTFFILE="${BASEDIR}/data/genes/Hdh.gtf"
+GENOMEFA="${BASEDIR}/data/genome/Hdh.fa"
 WRKDIR="${BASEDIR}/output"
 ALIGNLOC="${WRKDIR}/hisat2"
 BALLGOWNLOC="${WRKDIR}/ballgown"
@@ -138,7 +142,7 @@ reads1=(${FASTQLOC}/*_1.*)
 reads1=("${reads1[@]##*/}")
 reads2=("${reads1[@]/_1./_2.}")
 
-cd $WRKDIR
+cd ${WRKDIR}
 
 echo [`date +"%Y-%m-%d %H:%M:%S"`] "#> START: STRINGTIE Estimation"
 
@@ -174,9 +178,11 @@ done
 python2 /public/tools/rna_seq/stringtie-1.3.4/prepDE.py -l 150
 
 echo [`date +"%Y-%m-%d %H:%M:%S"`] "#> Step Three: Estimation Finished!"
+```
 
-EOF
+Then run via PBS:
 
+```shell
 qsub 03estimation.pbs
 
 ```
@@ -214,15 +220,15 @@ plotPCA(rld, intgroup="group")
 dev.off()
 
 # take group H_Red and H_YX for examples
-res<- results(dds,contrast=c("group","H_Red","H_YX"), alpha=0.05)
+res<- results(dds,contrast=c("group","H_Red","C_Red"), alpha=0.05)
 resOrdered <- res[order(res$padj), ]
 diff_gene_deseq2 <-subset(resOrdered,padj < 0.05 & (log2FoldChange > 1 | log2FoldChange < -1))
 diff_gene_deseq2 <- merge(as.data.frame(diff_gene_deseq2), as.data.frame(counts(dds,normalize=TRUE)), by="row.names",sort=FALSE)
-write.csv(diff_gene_deseq2, file="./H_RvY.sig.csv", row.names = F)
+write.csv(diff_gene_deseq2, file="./Red_HvC.sig.csv", row.names = F)
 
 EOF
 
-Rscript deseq.R
+qsub -I -N DESeq2 -l nodes=1:ppn=2 -l walltime=1000:00:00 -q high `Rscript deseq.R`
 
 ```
 
@@ -231,7 +237,7 @@ Rscript deseq.R
 
 cat <<EOF >>enrichment.R
 
-sig_gene <- read.csv("./H_RvY.sig.csv",header = T)
+sig_gene <- read.csv("./Red_HvC.sig.csv",header = T)
 universe <- read.delim("/public/home/benthic/Data_benthic/practice/mRNA/Hdh_universe.txt",sep="\t",header=FALSE,stringsAsFactors = F)
 go2gene <- read.delim("/public/home/benthic/Data_benthic/practice/mRNA/Hdh_go2gene.txt", sep="\t",header = FALSE,stringsAsFactors = F)
 go2name <- read.delim("/public/home/benthic/Data_benthic/practice/mRNA/Hdh_go2term.txt", sep="\t",header = FALSE,stringsAsFactors = F)
@@ -263,7 +269,7 @@ dev.off()
 
 EOF
 
-Rscript enrichment.R
+qsub -I -N enrichment -l nodes=1:ppn=2 -l walltime=1000:00:00 -q high `Rscript enrichment.R`
 
 ```
 

@@ -32,7 +32,7 @@
                 "url": "https:\/\/zkhuang2012.github.io\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "Linux, HISAT2, RNA-seq","wordcount":  915 ,
+            },"genre": "posts","keywords": "Linux, HISAT2, RNA-seq","wordcount":  935 ,
         "url": "https:\/\/zkhuang2012.github.io\/mrna_ref\/","datePublished": "2020-05-08T21:30:50+08:00","dateModified": "2020-07-23T01:25:03+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "zkhuang's Blog",
@@ -93,7 +93,7 @@
                                 <i class="far fa-folder fa-fw"></i>RNA-seq
                             </a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-05-08>2020-05-08</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 915 words&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 935 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>5 min&nbsp;</div>
         </div><div class="details toc" id="toc-static">
                 <div class="details-summary toc-title">
@@ -152,6 +152,15 @@ ln -s <span class="si">${</span><span class="nv">PWD</span><span class="si">}</s
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="2nd-alignment">2nd, Alignment</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/project/mRNA/bin
+</code></pre></td></tr></table>
+</div>
+</div><p>Copy the codes below to <strong>02alignment.pbs</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -225,98 +234,94 @@ ln -s <span class="si">${</span><span class="nv">PWD</span><span class="si">}</s
 </span><span class="lnt">69
 </span><span class="lnt">70
 </span><span class="lnt">71
-</span><span class="lnt">72
-</span><span class="lnt">73
-</span><span class="lnt">74
-</span><span class="lnt">75
-</span><span class="lnt">76
-</span><span class="lnt">77
-</span><span class="lnt">78
-</span><span class="lnt">79
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/project/mRNA/bin
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/bash -x
+</span><span class="cp"></span><span class="c1">#PBS -N ref_mRNA_02alignment</span>
+<span class="c1">#PBS -o ref_mRNA_02alignment.out</span>
+<span class="c1">#PBS -e ref_mRNA_02alignment.err</span>
+<span class="c1">#PBS -q high</span>
+<span class="c1">#PBS -j oe</span>
+<span class="c1">#PBS -l nodes=1:ppn=28</span>
 
-cat <span class="s">&lt;&lt;EOF &gt;&gt; 02alignment.pbs
-</span><span class="s">
-</span><span class="s">#!/bin/bash -x
-</span><span class="s">#PBS -N ref_mRNA_02alignment
-</span><span class="s">#PBS -o ref_mRNA_02alignment.out
-</span><span class="s">#PBS -e ref_mRNA_02alignment.err
-</span><span class="s">#PBS -q high
-</span><span class="s">#PBS -j oe
-</span><span class="s">#PBS -l nodes=1:ppn=28
-</span><span class="s">
-</span><span class="s">NUMCPUS=`wc -l &lt;$PBS_NODEFILE`
-</span><span class="s">THREADS=`expr ${NUMCPUS} \* 2`
-</span><span class="s">BASEDIR=&#34;${HOME}/project/mRNA&#34;
-</span><span class="s">FASTQLOC=&#34;$BASEDIR/data/samples&#34;
-</span><span class="s">GENOMEIDX=&#34;$BASEDIR/data/index/Hdh_tran&#34;
-</span><span class="s">GTFFILE=&#34;$BASEDIR/data/genes/Hdh.gtf&#34;
-</span><span class="s">GENOMEFA=&#34;$BASEDIR/data/genome/Hdh.fa&#34;
-</span><span class="s">WRKDIR=&#34;${BASEDIR}/output&#34;
-</span><span class="s">ALIGNLOC=&#34;${WRKDIR}/hisat2&#34;
-</span><span class="s">BALLGOWNLOC=&#34;${WRKDIR}/ballgown&#34;
-</span><span class="s">TEMPLOC=&#34;${WRKDIR}/tmp&#34;
-</span><span class="s">
-</span><span class="s"># transfer gff to gtf
-</span><span class="s">cd ${BASEDIR}/data/genes/
-</span><span class="s">gffread Hdh.gff -T -o ${GTFFILE}
-</span><span class="s">
-</span><span class="s"># Extract splice sites and exon info from gtf using the script under hisat_install_dir
-</span><span class="s">cd ${BASEDIR}/data/index
-</span><span class="s">python2 /public/tools/rna_seq/hisat2-2.1.0/extract_splice_sites.py ${GTFFILE} &gt; Hdh.ss
-</span><span class="s">python2 /public/tools/rna_seq/hisat2-2.1.0/extract_exons.py ${GTFFILE} &gt; Hdh.exon
-</span><span class="s">
-</span><span class="s"># Build genome index for hisat2
-</span><span class="s">hisat2-build -p 50 --ss Hdh.ss --exon Hdh.exon ${GENOMEFA} Hdh_tran
-</span><span class="s">
-</span><span class="s">## sample pair-end fastq must be named in this format “_1.*”&#34;_2.*&#34;. eg, &#34;gill01_1.fastq.gz&#34;,&#34;gill01_2.fastq.gz&#34;
-</span><span class="s">reads1=(${FASTQLOC}/*_1.*)
-</span><span class="s">reads1=(&#34;${reads1[@]##*/}&#34;)
-</span><span class="s">reads2=(&#34;${reads1[@]/_1./_2.}&#34;)
-</span><span class="s">
-</span><span class="s">
-</span><span class="s">cd $WRKDIR
-</span><span class="s">
-</span><span class="s">echo [`date +&#34;%Y-%m-%d %H:%M:%S&#34;`] &#34;#&gt; START: HISAT2 Alignment&#34;
-</span><span class="s">for ((i=0; i&lt;=${#reads1[@]}-1; i++ )); do
-</span><span class="s">	sample=&#34;${reads1[$i]%%.*}&#34;
-</span><span class="s">	sample=&#34;${sample%_*}&#34;
-</span><span class="s">
-</span><span class="s">	stime=`date +&#34;%Y-%m-%d %H:%M:%S&#34;`
-</span><span class="s">	echo &#34;[$stime] Processing sample: $sample&#34;
-</span><span class="s">	echo [$stime] &#34;   * Alignment of reads to genome (HISAT2)&#34;
-</span><span class="s">
-</span><span class="s">	hisat2 -p $NUMCPUS \
-</span><span class="s">		--dta \
-</span><span class="s">		-x ${GENOMEIDX} \
-</span><span class="s">		-1 ${FASTQLOC}/${reads1[$i]} \
-</span><span class="s">		-2 ${FASTQLOC}/${reads2[$i]} \
-</span><span class="s">		-S ${TEMPLOC}/${sample}.sam 2&gt;${ALIGNLOC}/${sample}.alnstats
-</span><span class="s">
-</span><span class="s">echo [`date +&#34;%Y-%m-%d %H:%M:%S&#34;`] &#34;   * Alignments conversion (SAMTools)&#34;
-</span><span class="s">	samtools view -S -b ${TEMPLOC}/${sample}.sam | \
-</span><span class="s">		samtools sort -@ $NUMCPUS -o ${ALIGNLOC}/${sample}.bam -
-</span><span class="s">
-</span><span class="s">	rm ${TEMPLOC}/${sample}.sam
-</span><span class="s">
-</span><span class="s">echo [`date +&#34;%Y-%m-%d %H:%M:%S&#34;`] &#34;   * Assemble transcripts (StringTie)&#34;
-</span><span class="s">	stringtie -p $NUMCPUS \
-</span><span class="s">		-G ${GTFFILE} \
-</span><span class="s">		-o ${ALIGNLOC}/${sample}.gtf \
-</span><span class="s">		-l ${sample} ${ALIGNLOC}/${sample}.bam
-</span><span class="s">
-</span><span class="s">done
-</span><span class="s">
-</span><span class="s">echo [`date +&#34;%Y-%m-%d %H:%M:%S&#34;`] &#34;#&gt; Step Two : Alignment Finished!&#34;
-</span><span class="s">
-</span><span class="s">EOF</span>
+<span class="nv">NUMCPUS</span><span class="o">=</span><span class="sb">`</span>wc -l &lt;<span class="nv">$PBS_NODEFILE</span><span class="sb">`</span>
+<span class="nv">THREADS</span><span class="o">=</span><span class="sb">`</span>expr <span class="si">${</span><span class="nv">NUMCPUS</span><span class="si">}</span> <span class="se">\*</span> 2<span class="sb">`</span>
+<span class="nv">BASEDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/project/mRNA&#34;</span>
+<span class="nv">FASTQLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/samples&#34;</span>
+<span class="nv">GENOMEIDX</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/index/Hdh_tran&#34;</span>
+<span class="nv">GTFFILE</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/genes/Hdh.gtf&#34;</span>
+<span class="nv">GENOMEFA</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/genome/Hdh.fa&#34;</span>
+<span class="nv">WRKDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/output&#34;</span>
+<span class="nv">ALIGNLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/hisat2&#34;</span>
+<span class="nv">BALLGOWNLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/ballgown&#34;</span>
+<span class="nv">TEMPLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/tmp&#34;</span>
 
-qsub 02alignment.pbs
+<span class="c1"># transfer gff to gtf</span>
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span>/data/genes/
+gffread Hdh.gff -T -o <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span>
+
+<span class="c1"># Extract splice sites and exon info from gtf using the script under hisat_install_dir</span>
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span>/data/index
+python2 /public/tools/rna_seq/hisat2-2.1.0/extract_splice_sites.py <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> &gt; Hdh.ss
+python2 /public/tools/rna_seq/hisat2-2.1.0/extract_exons.py <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> &gt; Hdh.exon
+
+<span class="c1"># Build genome index for hisat2</span>
+hisat2-build -p <span class="m">50</span> --ss Hdh.ss --exon Hdh.exon <span class="si">${</span><span class="nv">GENOMEFA</span><span class="si">}</span> Hdh_tran
+
+<span class="c1">## sample pair-end fastq must be named in this format “_1.*”&#34;_2.*&#34;. eg, &#34;gill01_1.fastq.gz&#34;,&#34;gill01_2.fastq.gz&#34;</span>
+<span class="nv">reads1</span><span class="o">=(</span><span class="si">${</span><span class="nv">FASTQLOC</span><span class="si">}</span>/*_1.*<span class="o">)</span>
+<span class="nv">reads1</span><span class="o">=(</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">reads1</span><span class="p">[@]##*/</span><span class="si">}</span><span class="s2">&#34;</span><span class="o">)</span>
+<span class="nv">reads2</span><span class="o">=(</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">reads1</span><span class="p">[@]/_1./_2.</span><span class="si">}</span><span class="s2">&#34;</span><span class="o">)</span>
+
+
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span>
+
+<span class="nb">echo</span> <span class="o">[</span><span class="sb">`</span>date +<span class="s2">&#34;%Y-%m-%d %H:%M:%S&#34;</span><span class="sb">`</span><span class="o">]</span> <span class="s2">&#34;#&gt; START: HISAT2 Alignment&#34;</span>
+<span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span> i&lt;<span class="o">=</span><span class="si">${#</span><span class="nv">reads1</span><span class="p">[@]</span><span class="si">}</span>-1<span class="p">;</span> i++ <span class="o">))</span><span class="p">;</span> <span class="k">do</span>
+	<span class="nv">sample</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">reads1</span><span class="p">[</span><span class="nv">$i</span><span class="p">]%%.*</span><span class="si">}</span><span class="s2">&#34;</span>
+	<span class="nv">sample</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">sample</span><span class="p">%_*</span><span class="si">}</span><span class="s2">&#34;</span>
+
+	<span class="nv">stime</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&#34;%Y-%m-%d %H:%M:%S&#34;</span><span class="sb">`</span>
+	<span class="nb">echo</span> <span class="s2">&#34;[</span><span class="nv">$stime</span><span class="s2">] Processing sample: </span><span class="nv">$sample</span><span class="s2">&#34;</span>
+	<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;   * Alignment of reads to genome (HISAT2)&#34;</span>
+
+	hisat2 -p <span class="nv">$NUMCPUS</span> <span class="se">\
+</span><span class="se"></span>		--dta <span class="se">\
+</span><span class="se"></span>		-x <span class="si">${</span><span class="nv">GENOMEIDX</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>		-1 <span class="si">${</span><span class="nv">FASTQLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">reads1</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>		-2 <span class="si">${</span><span class="nv">FASTQLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">reads2</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>		-S <span class="si">${</span><span class="nv">TEMPLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.sam 2&gt;<span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.alnstats
+
+<span class="nb">echo</span> <span class="o">[</span><span class="sb">`</span>date +<span class="s2">&#34;%Y-%m-%d %H:%M:%S&#34;</span><span class="sb">`</span><span class="o">]</span> <span class="s2">&#34;   * Alignments conversion (SAMTools)&#34;</span>
+	samtools view -S -b <span class="si">${</span><span class="nv">TEMPLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.sam <span class="p">|</span> <span class="se">\
+</span><span class="se"></span>		samtools sort -@ <span class="nv">$NUMCPUS</span> -o <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.bam -
+
+	rm <span class="si">${</span><span class="nv">TEMPLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.sam
+
+<span class="nb">echo</span> <span class="o">[</span><span class="sb">`</span>date +<span class="s2">&#34;%Y-%m-%d %H:%M:%S&#34;</span><span class="sb">`</span><span class="o">]</span> <span class="s2">&#34;   * Assemble transcripts (StringTie)&#34;</span>
+	stringtie -p <span class="nv">$NUMCPUS</span> <span class="se">\
+</span><span class="se"></span>		-G <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>		-o <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.gtf <span class="se">\
+</span><span class="se"></span>		-l <span class="si">${</span><span class="nv">sample</span><span class="si">}</span> <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.bam
+
+<span class="k">done</span>
+
+<span class="nb">echo</span> <span class="o">[</span><span class="sb">`</span>date +<span class="s2">&#34;%Y-%m-%d %H:%M:%S&#34;</span><span class="sb">`</span><span class="o">]</span> <span class="s2">&#34;#&gt; Step Two : Alignment Finished!&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Then run via PBS:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">qsub 02alignment.pbs
+
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="3rd-estimate-transcript-abundance">3rd, Estimate transcript abundance</h3>
+<p>Copy the codes below to <strong>03estimation.pbs</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -379,81 +384,78 @@ qsub 02alignment.pbs
 </span><span class="lnt">58
 </span><span class="lnt">59
 </span><span class="lnt">60
-</span><span class="lnt">61
-</span><span class="lnt">62
-</span><span class="lnt">63
-</span><span class="lnt">64
-</span><span class="lnt">65
-</span><span class="lnt">66
-</span><span class="lnt">67
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">cat <span class="s">&lt;&lt;EOF &gt;&gt; 03estimation.pbs
-</span><span class="s">
-</span><span class="s">#!/bin/bash -x
-</span><span class="s">#PBS -N ref_mRNA_03estimation
-</span><span class="s">#PBS -o ref_mRNA_03estimation.out
-</span><span class="s">#PBS -e ref_mRNA_03estimation.err
-</span><span class="s">#PBS -q high
-</span><span class="s">#PBS -j oe
-</span><span class="s">#PBS -l nodes=1:ppn=28
-</span><span class="s">
-</span><span class="s">NUMCPUS=`wc -l &lt;$PBS_NODEFILE`
-</span><span class="s">THREADS=`expr ${NUMCPUS} \* 2`
-</span><span class="s">BASEDIR=&#34;${HOME}/project/mRNA&#34;
-</span><span class="s">FASTQLOC=&#34;$BASEDIR/data/samples&#34;
-</span><span class="s">GENOMEIDX=&#34;$BASEDIR/data/index/Hdh_tran&#34;
-</span><span class="s">GTFFILE=&#34;$BASEDIR/data/genes/Hdh.gtf&#34;
-</span><span class="s">GENOMEFA=&#34;$BASEDIR/data/genome/Hdh.fa&#34;
-</span><span class="s">WRKDIR=&#34;${BASEDIR}/output&#34;
-</span><span class="s">ALIGNLOC=&#34;${WRKDIR}/hisat2&#34;
-</span><span class="s">BALLGOWNLOC=&#34;${WRKDIR}/ballgown&#34;
-</span><span class="s">TEMPLOC=&#34;${WRKDIR}/tmp&#34;
-</span><span class="s">
-</span><span class="s">reads1=(${FASTQLOC}/*_1.*)
-</span><span class="s">reads1=(&#34;${reads1[@]##*/}&#34;)
-</span><span class="s">reads2=(&#34;${reads1[@]/_1./_2.}&#34;)
-</span><span class="s">
-</span><span class="s">cd $WRKDIR
-</span><span class="s">
-</span><span class="s">echo [`date +&#34;%Y-%m-%d %H:%M:%S&#34;`] &#34;#&gt; START: STRINGTIE Estimation&#34;
-</span><span class="s">
-</span><span class="s">echo [`date +&#34;%Y-%m-%d %H:%M:%S&#34;`] &#34;#&gt; Merge all transcripts (StringTie)&#34;
-</span><span class="s">ls -1 ${ALIGNLOC}/*.gtf &gt; ${ALIGNLOC}/mergelist.txt
-</span><span class="s">
-</span><span class="s">stringtie --merge \
-</span><span class="s">	-p $NUMCPUS \
-</span><span class="s">	-G  ${GTFFILE} \
-</span><span class="s">	-o ${BALLGOWNLOC}/stringtie_merged.gtf ${ALIGNLOC}/mergelist.txt
-</span><span class="s">
-</span><span class="s">## Estimate transcript abundance
-</span><span class="s">echo [`date +&#34;%Y-%m-%d %H:%M:%S&#34;`] &#34;#&gt; Estimate abundance for each sample (StringTie)&#34;
-</span><span class="s">for ((i=0; i&lt;=${#reads1[@]}-1; i++ )); do
-</span><span class="s">
-</span><span class="s">	sample=&#34;${reads1[$i]%%.*}&#34;
-</span><span class="s">	sample=&#34;${sample%_*}&#34;
-</span><span class="s">
-</span><span class="s">	if [ ! -d ${BALLGOWNLOC}/${sample} ]; then
-</span><span class="s">		mkdir -p ${BALLGOWNLOC}/${sample}
-</span><span class="s">	fi
-</span><span class="s">
-</span><span class="s"># Estimate transcript abundance depend on the referenge genome with ignoring novel transcripts
-</span><span class="s">	stringtie -e -B \
-</span><span class="s">		-p $NUMCPUS \
-</span><span class="s">		-G ${GTFFILE} \
-</span><span class="s">		-o ${BALLGOWNLOC}/${sample}/${sample}.gtf ${ALIGNLOC}/${sample}.bam
-</span><span class="s">
-</span><span class="s">done
-</span><span class="s">
-</span><span class="s"># Generate transcript_count_matrix.csv and gene_count_matrix.csv using the script under stringtie_install_dir
-</span><span class="s">
-</span><span class="s">python2 /public/tools/rna_seq/stringtie-1.3.4/prepDE.py -l 150
-</span><span class="s">
-</span><span class="s">echo [`date +&#34;%Y-%m-%d %H:%M:%S&#34;`] &#34;#&gt; Step Three: Estimation Finished!&#34;
-</span><span class="s">
-</span><span class="s">EOF</span>
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/bash -x
+</span><span class="cp"></span><span class="c1">#PBS -N ref_mRNA_03estimation</span>
+<span class="c1">#PBS -o ref_mRNA_03estimation.out</span>
+<span class="c1">#PBS -e ref_mRNA_03estimation.err</span>
+<span class="c1">#PBS -q high</span>
+<span class="c1">#PBS -j oe</span>
+<span class="c1">#PBS -l nodes=1:ppn=28</span>
 
-qsub 03estimation.pbs
+<span class="nv">NUMCPUS</span><span class="o">=</span><span class="sb">`</span>wc -l &lt;<span class="nv">$PBS_NODEFILE</span><span class="sb">`</span>
+<span class="nv">THREADS</span><span class="o">=</span><span class="sb">`</span>expr <span class="si">${</span><span class="nv">NUMCPUS</span><span class="si">}</span> <span class="se">\*</span> 2<span class="sb">`</span>
+<span class="nv">BASEDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/project/mRNA&#34;</span>
+<span class="nv">FASTQLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/samples&#34;</span>
+<span class="nv">GENOMEIDX</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/index/Hdh_tran&#34;</span>
+<span class="nv">GTFFILE</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/genes/Hdh.gtf&#34;</span>
+<span class="nv">GENOMEFA</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/genome/Hdh.fa&#34;</span>
+<span class="nv">WRKDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/output&#34;</span>
+<span class="nv">ALIGNLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/hisat2&#34;</span>
+<span class="nv">BALLGOWNLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/ballgown&#34;</span>
+<span class="nv">TEMPLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/tmp&#34;</span>
+
+<span class="nv">reads1</span><span class="o">=(</span><span class="si">${</span><span class="nv">FASTQLOC</span><span class="si">}</span>/*_1.*<span class="o">)</span>
+<span class="nv">reads1</span><span class="o">=(</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">reads1</span><span class="p">[@]##*/</span><span class="si">}</span><span class="s2">&#34;</span><span class="o">)</span>
+<span class="nv">reads2</span><span class="o">=(</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">reads1</span><span class="p">[@]/_1./_2.</span><span class="si">}</span><span class="s2">&#34;</span><span class="o">)</span>
+
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span>
+
+<span class="nb">echo</span> <span class="o">[</span><span class="sb">`</span>date +<span class="s2">&#34;%Y-%m-%d %H:%M:%S&#34;</span><span class="sb">`</span><span class="o">]</span> <span class="s2">&#34;#&gt; START: STRINGTIE Estimation&#34;</span>
+
+<span class="nb">echo</span> <span class="o">[</span><span class="sb">`</span>date +<span class="s2">&#34;%Y-%m-%d %H:%M:%S&#34;</span><span class="sb">`</span><span class="o">]</span> <span class="s2">&#34;#&gt; Merge all transcripts (StringTie)&#34;</span>
+ls -1 <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/*.gtf &gt; <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/mergelist.txt
+
+stringtie --merge <span class="se">\
+</span><span class="se"></span>	-p <span class="nv">$NUMCPUS</span> <span class="se">\
+</span><span class="se"></span>	-G  <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>	-o <span class="si">${</span><span class="nv">BALLGOWNLOC</span><span class="si">}</span>/stringtie_merged.gtf <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/mergelist.txt
+
+<span class="c1">## Estimate transcript abundance</span>
+<span class="nb">echo</span> <span class="o">[</span><span class="sb">`</span>date +<span class="s2">&#34;%Y-%m-%d %H:%M:%S&#34;</span><span class="sb">`</span><span class="o">]</span> <span class="s2">&#34;#&gt; Estimate abundance for each sample (StringTie)&#34;</span>
+<span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span> i&lt;<span class="o">=</span><span class="si">${#</span><span class="nv">reads1</span><span class="p">[@]</span><span class="si">}</span>-1<span class="p">;</span> i++ <span class="o">))</span><span class="p">;</span> <span class="k">do</span>
+
+	<span class="nv">sample</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">reads1</span><span class="p">[</span><span class="nv">$i</span><span class="p">]%%.*</span><span class="si">}</span><span class="s2">&#34;</span>
+	<span class="nv">sample</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">sample</span><span class="p">%_*</span><span class="si">}</span><span class="s2">&#34;</span>
+
+	<span class="k">if</span> <span class="o">[</span> ! -d <span class="si">${</span><span class="nv">BALLGOWNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+		mkdir -p <span class="si">${</span><span class="nv">BALLGOWNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>
+	<span class="k">fi</span>
+
+<span class="c1"># Estimate transcript abundance depend on the referenge genome with ignoring novel transcripts</span>
+	stringtie -e -B <span class="se">\
+</span><span class="se"></span>		-p <span class="nv">$NUMCPUS</span> <span class="se">\
+</span><span class="se"></span>		-G <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>		-o <span class="si">${</span><span class="nv">BALLGOWNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.gtf <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.bam
+
+<span class="k">done</span>
+
+<span class="c1"># Generate transcript_count_matrix.csv and gene_count_matrix.csv using the script under stringtie_install_dir</span>
+
+python2 /public/tools/rna_seq/stringtie-1.3.4/prepDE.py -l <span class="m">150</span>
+
+<span class="nb">echo</span> <span class="o">[</span><span class="sb">`</span>date +<span class="s2">&#34;%Y-%m-%d %H:%M:%S&#34;</span><span class="sb">`</span><span class="o">]</span> <span class="s2">&#34;#&gt; Step Three: Estimation Finished!&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Then run via PBS:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">qsub 03estimation.pbs
 
 </code></pre></td></tr></table>
 </div>
@@ -532,15 +534,15 @@ qsub 03estimation.pbs
 <span class="nf">dev.off</span><span class="p">()</span>
 
 <span class="c1"># take group H_Red and H_YX for examples</span>
-<span class="n">res</span><span class="o">&lt;-</span> <span class="nf">results</span><span class="p">(</span><span class="n">dds</span><span class="p">,</span><span class="n">contrast</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;group&#34;</span><span class="p">,</span><span class="s">&#34;H_Red&#34;</span><span class="p">,</span><span class="s">&#34;H_YX&#34;</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="m">0.05</span><span class="p">)</span>
+<span class="n">res</span><span class="o">&lt;-</span> <span class="nf">results</span><span class="p">(</span><span class="n">dds</span><span class="p">,</span><span class="n">contrast</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;group&#34;</span><span class="p">,</span><span class="s">&#34;H_Red&#34;</span><span class="p">,</span><span class="s">&#34;C_Red&#34;</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="m">0.05</span><span class="p">)</span>
 <span class="n">resOrdered</span> <span class="o">&lt;-</span> <span class="n">res</span><span class="nf">[order</span><span class="p">(</span><span class="n">res</span><span class="o">$</span><span class="n">padj</span><span class="p">),</span> <span class="n">]</span>
 <span class="n">diff_gene_deseq2</span> <span class="o">&lt;-</span><span class="nf">subset</span><span class="p">(</span><span class="n">resOrdered</span><span class="p">,</span><span class="n">padj</span> <span class="o">&lt;</span> <span class="m">0.05</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">log2FoldChange</span> <span class="o">&gt;</span> <span class="m">1</span> <span class="o">|</span> <span class="n">log2FoldChange</span> <span class="o">&lt;</span> <span class="m">-1</span><span class="p">))</span>
 <span class="n">diff_gene_deseq2</span> <span class="o">&lt;-</span> <span class="nf">merge</span><span class="p">(</span><span class="nf">as.data.frame</span><span class="p">(</span><span class="n">diff_gene_deseq2</span><span class="p">),</span> <span class="nf">as.data.frame</span><span class="p">(</span><span class="nf">counts</span><span class="p">(</span><span class="n">dds</span><span class="p">,</span><span class="n">normalize</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)),</span> <span class="n">by</span><span class="o">=</span><span class="s">&#34;row.names&#34;</span><span class="p">,</span><span class="n">sort</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
-<span class="nf">write.csv</span><span class="p">(</span><span class="n">diff_gene_deseq2</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="s">&#34;./H_RvY.sig.csv&#34;</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="bp">F</span><span class="p">)</span>
+<span class="nf">write.csv</span><span class="p">(</span><span class="n">diff_gene_deseq2</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="s">&#34;./Red_HvC.sig.csv&#34;</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="bp">F</span><span class="p">)</span>
 
 <span class="n">EOF</span>
 
-<span class="n">Rscript</span> <span class="n">deseq.R</span>
+<span class="n">qsub</span> <span class="o">-</span><span class="n">I</span> <span class="o">-</span><span class="n">N</span> <span class="n">DESeq2</span> <span class="o">-</span><span class="n">l</span> <span class="n">nodes</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="n">ppn</span><span class="o">=</span><span class="m">2</span> <span class="o">-</span><span class="n">l</span> <span class="n">walltime</span><span class="o">=</span><span class="m">1000</span><span class="o">:</span><span class="m">00</span><span class="o">:</span><span class="m">00</span> <span class="o">-</span><span class="n">q</span> <span class="n">high</span> <span class="n">`Rscript deseq.R`</span>
 
 </code></pre></td></tr></table>
 </div>
@@ -589,7 +591,7 @@ qsub 03estimation.pbs
 <pre class="chroma"><code class="language-R" data-lang="R">
 <span class="n">cat</span> <span class="o">&lt;&lt;</span><span class="n">EOF</span> <span class="o">&gt;&gt;</span><span class="n">enrichment.R</span>
 
-<span class="n">sig_gene</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#34;./H_RvY.sig.csv&#34;</span><span class="p">,</span><span class="n">header</span> <span class="o">=</span> <span class="bp">T</span><span class="p">)</span>
+<span class="n">sig_gene</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#34;./Red_HvC.sig.csv&#34;</span><span class="p">,</span><span class="n">header</span> <span class="o">=</span> <span class="bp">T</span><span class="p">)</span>
 <span class="n">universe</span> <span class="o">&lt;-</span> <span class="nf">read.delim</span><span class="p">(</span><span class="s">&#34;/public/home/benthic/Data_benthic/practice/mRNA/Hdh_universe.txt&#34;</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s">&#34;\t&#34;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="bp">F</span><span class="p">)</span>
 <span class="n">go2gene</span> <span class="o">&lt;-</span> <span class="nf">read.delim</span><span class="p">(</span><span class="s">&#34;/public/home/benthic/Data_benthic/practice/mRNA/Hdh_go2gene.txt&#34;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#34;\t&#34;</span><span class="p">,</span><span class="n">header</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span><span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="bp">F</span><span class="p">)</span>
 <span class="n">go2name</span> <span class="o">&lt;-</span> <span class="nf">read.delim</span><span class="p">(</span><span class="s">&#34;/public/home/benthic/Data_benthic/practice/mRNA/Hdh_go2term.txt&#34;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#34;\t&#34;</span><span class="p">,</span><span class="n">header</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span><span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="bp">F</span><span class="p">)</span>
@@ -621,7 +623,7 @@ qsub 03estimation.pbs
 
 <span class="n">EOF</span>
 
-<span class="n">Rscript</span> <span class="n">enrichment.R</span>
+<span class="n">qsub</span> <span class="o">-</span><span class="n">I</span> <span class="o">-</span><span class="n">N</span> <span class="n">enrichment</span> <span class="o">-</span><span class="n">l</span> <span class="n">nodes</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="n">ppn</span><span class="o">=</span><span class="m">2</span> <span class="o">-</span><span class="n">l</span> <span class="n">walltime</span><span class="o">=</span><span class="m">1000</span><span class="o">:</span><span class="m">00</span><span class="o">:</span><span class="m">00</span> <span class="o">-</span><span class="n">q</span> <span class="n">high</span> <span class="n">`Rscript enrichment.R`</span>
 
 </code></pre></td></tr></table>
 </div>
