@@ -34,11 +34,6 @@ done
 
 ## 2nd, 第一次比对
 ```shell
-cd ${HOME}/project/mRNA/bin
-```
-Copy the codes below to **02alignment.pbs**
-
-```shell
 #!/bin/bash -x
 
 # 环境参数配置
@@ -206,6 +201,12 @@ echo [$stime] " 2-pass mode mapping jobs (STAR) Finished."
 }
 
 two-pass_align 2>&1 | tee $LOGFILE
+```
+
+## 4th, 转录本定量
+
+```shell
+
 ```
 
 后续差异基因分析和功能分析，参考RNA-seq analysis (有参分析 一)

@@ -33,7 +33,7 @@
                 "url": "https:\/\/zkhuang2012.github.io\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "RNA-seq, STAR, featureCount","wordcount":  1221 ,
+            },"genre": "posts","keywords": "RNA-seq, STAR, featureCount","wordcount":  1219 ,
         "url": "https:\/\/zkhuang2012.github.io\/zh-cn\/mrna_ref2\/","datePublished": "2021-12-05T21:30:50+08:00","dateModified": "2021-12-05T21:30:50+08:00","publisher": {
                 "@type": "Organization",
                 "name": "zkhuang's Blog",
@@ -98,7 +98,7 @@
                                 <i class="far fa-folder fa-fw"></i>转录组
                             </a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2021-12-05>2021-12-05</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 1221 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1219 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static">
                 <div class="details-summary toc-title">
@@ -111,6 +111,7 @@
     <li><a href="#1st-前期准备">1st, 前期准备</a></li>
     <li><a href="#2nd-第一次比对">2nd, 第一次比对</a></li>
     <li><a href="#3rd-第二次比对">3rd, 第二次比对</a></li>
+    <li><a href="#4th-转录本定量">4th, 转录本定量</a></li>
     <li><a href="#reference">Reference</a></li>
   </ul>
 </nav></div>
@@ -170,15 +171,6 @@ ln -s /path-to-reference-genome/ref.gff <span class="si">${</span><span class="n
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="2nd-第一次比对">2nd, 第一次比对</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/project/mRNA/bin
-</code></pre></td></tr></table>
-</div>
-</div><p>Copy the codes below to <strong>02alignment.pbs</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
@@ -516,6 +508,15 @@ two-pass_align<span class="o">()</span> <span class="o">{</span>
 two-pass_align 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> tee <span class="nv">$LOGFILE</span>
 </code></pre></td></tr></table>
 </div>
+</div><h2 id="4th-转录本定量">4th, 转录本定量</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">
+</code></pre></td></tr></table>
+</div>
 </div><p>后续差异基因分析和功能分析，参考RNA-seq analysis (有参分析 一)</p>
 <h2 id="reference">Reference</h2>
 </div>
@@ -553,7 +554,7 @@ two-pass_align 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span c
         </section>
     </div>
 
-    <div class="post-nav"><a href="/zh-cn/mrna_ref1/" class="prev" rel="prev" title="转录组分析有参分析 （一)"><i class="fas fa-angle-left fa-fw"></i>转录组分析有参分析 （一)</a></div>
+    <div class="post-nav"><a href="/zh-cn/mrna_ref1/" class="prev" rel="prev" title="转录组有参分析 （一)"><i class="fas fa-angle-left fa-fw"></i>转录组有参分析 （一)</a></div>
 </div>
 <div id="comments"><div id="gitalk" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
