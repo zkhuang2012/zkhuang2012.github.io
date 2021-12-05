@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>RNA-seq - Category - Huang ZK&#39;s Coffe Chats</title>
+        <title>RNA-seq - Category - Coffe Chats</title>
         <link>https://zkhuang2012.github.io/categories/rna-seq/</link>
-        <description>RNA-seq - Category - Huang ZK&#39;s Coffe Chats</description>
+        <description>RNA-seq - Category - Coffe Chats</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>zkhuang2012@gmail.com (zkhuang)</managingEditor>
             <webMaster>zkhuang2012@gmail.com (zkhuang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 08 May 2020 21:30:50 &#43;0800</lastBuildDate><atom:link href="https://zkhuang2012.github.io/categories/rna-seq/" rel="self" type="application/rss+xml" /><item>
     <title>RNA-seq ref-align analysis</title>
