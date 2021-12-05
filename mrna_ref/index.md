@@ -5,7 +5,7 @@
 
 This RNA-seq pipeline was built with HISAT2 + Stringtie + Deseq2 + clusterProfiler.
 
-### 1st, Prepariation
+## 1st, Prepariation
 ```shell
 # Directory Deployment
 mkdir -p ${HOME}/project/mRNA/{bin,data/{genes,genome,index,samples},output/{ballgown,hisat2,tmp}}
@@ -22,7 +22,7 @@ done
 
 ```
 
-### 2nd, Alignment
+## 2nd, Alignment
 ```shell
 cd ${HOME}/project/mRNA/bin
 ```
@@ -109,7 +109,7 @@ qsub 02alignment.pbs
 
 ```
 
-### 3rd, Estimate transcript abundance
+## 3rd, Estimate transcript abundance
 
 Copy the codes below to **03estimation.pbs**
 
@@ -184,7 +184,7 @@ qsub 03estimation.pbs
 ```
 
 
-### 4th, Differential expression analysis
+## 4th, Differential expression analysis
 ```R
 
 ln -s /public/home/benthic/Data_benthic/practice/mRNA/phenodata.csv ${HOME}/project/mRNA/output/phenodata.csv
@@ -228,7 +228,7 @@ qsub -I -N DESeq2 -l nodes=1:ppn=2 -l walltime=1000:00:00 -q high `Rscript deseq
 
 ```
 
-### 5th, Funtional enrichment analysis
+## 5th, Funtional enrichment analysis
 ```R
 
 cat <<EOF >>enrichment.R
