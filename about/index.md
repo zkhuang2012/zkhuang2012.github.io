@@ -1,5 +1,5 @@
-# About this blog
+# About this Blog
 
 
-记录和整理这些年所学的知识。
+To record and organize what I have learned since 2014.
 

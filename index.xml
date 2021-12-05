@@ -5,25 +5,18 @@
         <description>Coffe Chats</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>zkhuang2012@gmail.com (zkhuang)</managingEditor>
             <webMaster>zkhuang2012@gmail.com (zkhuang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 08 May 2020 21:30:50 &#43;0800</lastBuildDate><atom:link href="https://zkhuang2012.github.io/" rel="self" type="application/rss+xml" /><item>
-    <title>RNA-seq ref-align analysis</title>
-    <link>https://zkhuang2012.github.io/mrna_ref/</link>
+    <title>RNA-seq analysis (Reference-align 1)</title>
+    <link>https://zkhuang2012.github.io/mrna_ref1/</link>
     <pubDate>Fri, 08 May 2020 21:30:50 &#43;0800</pubDate>
     <author>Author</author>
-    <guid>https://zkhuang2012.github.io/mrna_ref/</guid>
-    <description><![CDATA[A regular RNA-seq pipeline]]></description>
+    <guid>https://zkhuang2012.github.io/mrna_ref1/</guid>
+    <description><![CDATA[A routine analysis of RNA-seq.]]></description>
 </item><item>
-    <title>关于生信软件的安装</title>
-    <link>https://zkhuang2012.github.io/install_intro/</link>
-    <pubDate>Sun, 03 May 2020 23:28:06 &#43;0800</pubDate>
-    <author>Author</author>
-    <guid>https://zkhuang2012.github.io/install_intro/</guid>
-    <description><![CDATA[大黄叨叨]]></description>
-</item><item>
-    <title>About this blog</title>
+    <title>About this Blog</title>
     <link>https://zkhuang2012.github.io/about/</link>
     <pubDate>Sun, 28 Jul 2019 18:03:43 &#43;0800</pubDate>
     <author>Author</author>
     <guid>https://zkhuang2012.github.io/about/</guid>
-    <description><![CDATA[记录和整理这些年所学的知识。]]></description>
+    <description><![CDATA[To record and organize what I have learned since 2014.]]></description>
 </item></channel>
 </rss>

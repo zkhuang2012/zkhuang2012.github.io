@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>转录组有参分析 （二) - Coffe Chats</title>
+        <meta name="Description" content="关于 LoveIt 主题"><meta property="og:title" content="转录组有参分析 （二)" />
+<meta property="og:description" content="转录组常规有参分析（二）" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zkhuang2012.github.io/zh-cn/mrna_ref2/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-05T21:30:50+08:00" />
+<meta property="article:modified_time" content="2021-12-05T21:30:50+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="转录组有参分析 （二)"/>
+<meta name="twitter:description" content="转录组常规有参分析（二）"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://zkhuang2012.github.io/zh-cn/mrna_ref2/" /><link rel="prev" href="https://zkhuang2012.github.io/zh-cn/mrna_ref1/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.zh-cn.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "转录组有参分析 （二)",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/zkhuang2012.github.io\/zh-cn\/mrna_ref2\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "https:\/\/zkhuang2012.github.io\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "RNA-seq, STAR, featureCount","wordcount":  1371 ,
+        "url": "https:\/\/zkhuang2012.github.io\/zh-cn\/mrna_ref2\/","datePublished": "2021-12-05T21:30:50+08:00","dateModified": "2021-12-05T21:30:50+08:00","publisher": {
+                "@type": "Organization",
+                "name": "zkhuang's Blog",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/zkhuang2012.github.io\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"author": {
+                "@type": "Person",
+                "name": "zkhuang"
+            },"description": ""
+    }
+    </script></head>
+    <body><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/zh-cn/" title="Coffe Chats"><span class="header-title-pre"><i class='far fa-coffee fa'></i></span><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/posts/"> 所有文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><a class="menu-item" href="/zh-cn/about/"> 关于 </a><a class="menu-item" href="https://github.com/zkhuang2012" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/zh-cn/mrna_ref2/" selected>简体中文</option></select>
+                    </a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/zh-cn/" title="Coffe Chats"><span class="header-title-pre"><i class='far fa-coffee fa'></i></span><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/zh-cn/posts/" title="">所有文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a class="menu-item" href="/zh-cn/about/" title="">关于</a><a class="menu-item" href="https://github.com/zkhuang2012" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/zh-cn/mrna_ref2/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">转录组有参分析 （二)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>zkhuang</a></span>&nbsp;
+                    <span class="post-category">收录于<a href="/zh-cn/categories/%E8%BD%AC%E5%BD%95%E7%BB%84/">
+                                <i class="far fa-folder fa-fw"></i>转录组
+                            </a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2021-12-05>2021-12-05</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1371 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#介绍">介绍</a></li>
+    <li><a href="#1st-前期准备">1st, 前期准备</a></li>
+    <li><a href="#2nd-比对">2nd, 比对</a></li>
+    <li><a href="#3rd-转录本定量">3rd, 转录本定量</a></li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="介绍">介绍</h2>
+<p>本篇记录转录组有参分析主要基于STAR(比对)+featureCount(定量)。</p>
+<h2 id="1st-前期准备">1st, 前期准备</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 部署工作环境</span>
+mkdir -p <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/project/mRNA/<span class="o">{</span>bin,data/<span class="o">{</span>genes,genome,index,samples<span class="o">}</span>,output/<span class="o">{</span>ballgown,hisat2,tmp<span class="o">}}</span>
+
+<span class="c1">##bin，存放分析脚本</span>
+<span class="c1">##data/genes，存放基因组gff</span>
+<span class="c1">##data/genome,存放基因组fasta</span>
+<span class="c1">##data/index，存放基因组索引文件index</span>
+<span class="c1">##data/samples，存放样品数据reads fastq</span>
+
+<span class="c1"># 准备数据</span>
+ln -s /path-to-reference-genome/ref.fa <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/project/mRNA/data/genome/
+ln -s /path-to-reference-genome/ref.gff <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/project/mRNA/data/genes/
+
+<span class="c1">##/path-to-reference-genome/为基因组存放路径</span>
+<span class="c1">##ref.fa为基因组fasta</span>
+<span class="c1">##ref.gff3为基因组结构注释文件gff3</span>
+
+<span class="k">for</span> i in <span class="sb">`</span>find /path-to-samples-fastq/ -type f -name <span class="s2">&#34;*.fq.gz&#34;</span><span class="sb">`</span><span class="p">;</span>
+<span class="k">do</span>
+	ln -s <span class="si">${</span><span class="nv">i</span><span class="si">}</span> <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/project/mRNA/data/samples/<span class="p">;</span>
+<span class="k">done</span>
+
+<span class="c1">##/path-to-samples-fastq/为样品fastq存放路径</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="2nd-比对">2nd, 比对</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/project/mRNA/bin
+</code></pre></td></tr></table>
+</div>
+</div><p>Copy the codes below to <strong>02alignment.pbs</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/bash -x
+</span><span class="cp"></span>
+<span class="c1"># 环境参数配置</span>
+<span class="nv">NUMCPUS</span><span class="o">=</span><span class="m">28</span>
+<span class="nv">THREADS</span><span class="o">=</span><span class="sb">`</span>expr <span class="si">${</span><span class="nv">NUMCPUS</span><span class="si">}</span> <span class="se">\*</span> 2<span class="sb">`</span>
+<span class="nv">BASEDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/project/mRNA&#34;</span>
+<span class="nv">FASTQLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/samples&#34;</span>
+<span class="nv">GENOMEIDX</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/index/ref_tran&#34;</span>
+<span class="nv">GTFFILE</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/genes/ref.gtf&#34;</span>
+<span class="nv">GENOMEFA</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/genome/ref.fa&#34;</span>
+<span class="nv">WRKDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/output&#34;</span>
+<span class="nv">ALIGNLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/hisat2&#34;</span>
+<span class="nv">BALLGOWNLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/ballgown&#34;</span>
+<span class="nv">TEMPLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/tmp&#34;</span>
+
+<span class="c1">##NUMCPUS 使用CPU数，根据计算资源调整；</span>
+<span class="c1">##THREADS，线程数为CPU数x2</span>
+<span class="c1">##BASEDIR，proj基本目录</span>
+<span class="c1">##FASTQLOC，reads fastq路径</span>
+<span class="c1">##GENOMEIDX，基因组ref的index文件</span>
+<span class="c1">##GTFFILE，基因组ref的结构注释文件gtf，可从gff文件转换</span>
+<span class="c1">##GENOMEFA，基因组ref的fasta</span>
+<span class="c1">##WRKDIR，proj输出目录</span>
+<span class="c1">##ALIGNLOC，比对结果目录</span>
+<span class="c1">##BALLGOWNLOC，定量等结果目录</span>
+<span class="c1">##TEMPLOC，临时文件</span>
+
+
+<span class="c1"># 将基因组注释文件gff3转为gtf</span>
+
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span>/data/genes/
+gffread ref.gff -T -o <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span>
+
+<span class="c1"># 提取剪切位点和外显子信息</span>
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span>/data/index
+python2 /path-to-hisat_install_dir/extract_splice_sites.py <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> &gt; ref.ss
+python2 /path-to-hisat_install_dir/extract_exons.py <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> &gt; ref.exon
+
+<span class="c1">##/path-to-hisat_install_dir/为HISAT2安装路径</span>
+
+<span class="c1"># 建立基因组index</span>
+hisat2-build -p <span class="si">${</span><span class="nv">THREADS</span><span class="si">}</span> --ss ref.ss --exon ref.exon <span class="si">${</span><span class="nv">GENOMEFA</span><span class="si">}</span> ref_tran
+
+<span class="c1"># 提取reads信息</span>
+<span class="nv">reads1</span><span class="o">=(</span><span class="si">${</span><span class="nv">FASTQLOC</span><span class="si">}</span>/*_1.*<span class="o">)</span>
+<span class="nv">reads1</span><span class="o">=(</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">reads1</span><span class="p">[@]##*/</span><span class="si">}</span><span class="s2">&#34;</span><span class="o">)</span>
+<span class="nv">reads2</span><span class="o">=(</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">reads1</span><span class="p">[@]/_1./_2.</span><span class="si">}</span><span class="s2">&#34;</span><span class="o">)</span>
+
+<span class="c1">###样品reads pair-end fastq必须是以&#34;_1.*&#34;或&#34;_2.*&#34;结尾，如&#34;gill01_1.fastq.gz&#34;,&#34;gill01_2.fastq.gz&#34;</span>
+
+<span class="c1"># 开始比对</span>
+
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span>
+
+<span class="nv">stime</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&#34;%Y-%m-%d %H:%M:%S&#34;</span><span class="sb">`</span>
+
+<span class="nb">echo</span> <span class="s2">&#34;[</span><span class="nv">$stime</span><span class="s2">] #&gt; START: HISAT2 Alignment&#34;</span>
+
+<span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span> i&lt;<span class="o">=</span><span class="si">${#</span><span class="nv">reads1</span><span class="p">[@]</span><span class="si">}</span>-1<span class="p">;</span> i++ <span class="o">))</span><span class="p">;</span> <span class="k">do</span>
+	<span class="nv">sample</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">reads1</span><span class="p">[</span><span class="nv">$i</span><span class="p">]%%.*</span><span class="si">}</span><span class="s2">&#34;</span>
+	<span class="nv">sample</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">sample</span><span class="p">%_*</span><span class="si">}</span><span class="s2">&#34;</span>
+<span class="c1">##根据reads1获得sample</span>
+
+	<span class="nb">echo</span> <span class="s2">&#34;[</span><span class="nv">$stime</span><span class="s2">] Processing sample: </span><span class="nv">$sample</span><span class="s2">&#34;</span>
+
+	<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;   * Alignment of reads to genome (HISAT2)&#34;</span>
+	hisat2 -p <span class="nv">$NUMCPUS</span> <span class="se">\
+</span><span class="se"></span>		--dta <span class="se">\
+</span><span class="se"></span>		-x <span class="si">${</span><span class="nv">GENOMEIDX</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>		-1 <span class="si">${</span><span class="nv">FASTQLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">reads1</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>		-2 <span class="si">${</span><span class="nv">FASTQLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">reads2</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>		-S <span class="si">${</span><span class="nv">TEMPLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.sam 2&gt;<span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.alnstats
+
+<span class="c1">##-p，设置线程数</span>
+<span class="c1">##--dta,</span>
+<span class="c1">##--x，指定基因组index</span>
+<span class="c1">##--1，输入reads1.fastq</span>
+<span class="c1">##--2，输入reads2.fastq</span>
+<span class="c1">##--S，指定sam</span>
+
+	<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;   * Alignments conversion (SAMTools)&#34;</span>
+	samtools view -S -b <span class="si">${</span><span class="nv">TEMPLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.sam <span class="p">|</span> <span class="se">\
+</span><span class="se"></span>		samtools sort -@ <span class="nv">$NUMCPUS</span> -o <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.bam -
+	rm <span class="si">${</span><span class="nv">TEMPLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.sam
+
+	<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;   * Assemble transcripts (StringTie)&#34;</span>
+	stringtie -p <span class="nv">$NUMCPUS</span> <span class="se">\
+</span><span class="se"></span>		-G <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>		-o <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.gtf <span class="se">\
+</span><span class="se"></span>		-l <span class="si">${</span><span class="nv">sample</span><span class="si">}</span> <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.bam
+
+<span class="k">done</span>
+
+<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;#&gt; Step Two : Alignment Finished!&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="3rd-转录本定量">3rd, 转录本定量</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/bash -x
+</span><span class="cp"></span>
+<span class="c1"># 环境参数配置</span>
+<span class="nv">NUMCPUS</span><span class="o">=</span><span class="m">28</span>
+<span class="nv">THREADS</span><span class="o">=</span><span class="sb">`</span>expr <span class="si">${</span><span class="nv">NUMCPUS</span><span class="si">}</span> <span class="se">\*</span> 2<span class="sb">`</span>
+<span class="nv">BASEDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/project/mRNA&#34;</span>
+<span class="nv">FASTQLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/samples&#34;</span>
+<span class="nv">GENOMEIDX</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/index/ref_tran&#34;</span>
+<span class="nv">GTFFILE</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/genes/ref.gtf&#34;</span>
+<span class="nv">GENOMEFA</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/genome/ref.fa&#34;</span>
+<span class="nv">WRKDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/output&#34;</span>
+<span class="nv">ALIGNLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/hisat2&#34;</span>
+<span class="nv">BALLGOWNLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/ballgown&#34;</span>
+<span class="nv">TEMPLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/tmp&#34;</span>
+
+<span class="nv">stime</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&#34;%Y-%m-%d %H:%M:%S&#34;</span><span class="sb">`</span>
+
+<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;#&gt; START: STRINGTIE Estimation&#34;</span>
+
+<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;#&gt; Merge all transcripts (StringTie)&#34;</span>
+
+ls -1 <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/*.gtf &gt; <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/mergelist.txt
+
+stringtie --merge <span class="se">\
+</span><span class="se"></span>	-p <span class="nv">$NUMCPUS</span> <span class="se">\
+</span><span class="se"></span>	-G  <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>	-o <span class="si">${</span><span class="nv">BALLGOWNLOC</span><span class="si">}</span>/stringtie_merged.gtf <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/mergelist.txt
+<span class="c1">##</span>
+<span class="c1">##</span>
+<span class="c1">##</span>
+<span class="c1">##</span>
+
+<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;#&gt; Estimate abundance for each sample (StringTie)&#34;</span>
+
+<span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span> i&lt;<span class="o">=</span><span class="si">${#</span><span class="nv">reads1</span><span class="p">[@]</span><span class="si">}</span>-1<span class="p">;</span> i++ <span class="o">))</span><span class="p">;</span> <span class="k">do</span>
+
+	<span class="nv">sample</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">reads1</span><span class="p">[</span><span class="nv">$i</span><span class="p">]%%.*</span><span class="si">}</span><span class="s2">&#34;</span>
+	<span class="nv">sample</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">sample</span><span class="p">%_*</span><span class="si">}</span><span class="s2">&#34;</span>
+
+	<span class="k">if</span> <span class="o">[</span> ! -d <span class="si">${</span><span class="nv">BALLGOWNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+		mkdir -p <span class="si">${</span><span class="nv">BALLGOWNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>
+	<span class="k">fi</span>
+
+<span class="c1"># Estimate transcript abundance depend on the referenge genome with ignoring novel transcripts</span>
+	stringtie -e -B <span class="se">\
+</span><span class="se"></span>		-p <span class="nv">$NUMCPUS</span> <span class="se">\
+</span><span class="se"></span>		-G <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>		-o <span class="si">${</span><span class="nv">BALLGOWNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.gtf <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.bam
+
+<span class="c1">##</span>
+<span class="c1">##</span>
+<span class="c1">##</span>
+
+<span class="k">done</span>
+
+<span class="c1"># Generate transcript_count_matrix.csv and gene_count_matrix.csv using the script under stringtie_install_dir</span>
+
+python2 /public/tools/rna_seq/stringtie-1.3.4/prepDE.py -l <span class="m">150</span>
+
+<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;#&gt; Step Three: Estimation Finished!&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>后续差异基因分析和功能分析，参考RNA-seq analysis (有参分析 一)</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://www.nature.com/articles/nprot.2016.095" target="_blank" rel="noopener noreffer">https://www.nature.com/articles/nprot.2016.095</a></li>
+<li><a href="http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html" target="_blank" rel="noopener noreffer">http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html</a></li>
+<li><a href="https://guangchuangyu.github.io/software/clusterProfiler/" target="_blank" rel="noopener noreffer">https://guangchuangyu.github.io/software/clusterProfiler/</a></li>
+</ul>
+</div>
+    <div style="padding: 10px 1; margin: 10px auto; width: 100%; font-size:16px; text-align: center;">
+        <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+            <span>Buy Me A Coffee</span></button>
+        <div id="QR" style="display: none;">
+            <div id="wechat" style="display: inline-block">
+                <a class="fancybox" rel="group">
+                    <img id="wechat_qr" src="/images/coffee.png" alt="WeChat Pay"></a>
+            </div>
+        </div>
+    </div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>本文于 2021-12-05 更新</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/zh-cn/mrna_ref2/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://zkhuang2012.github.io/zh-cn/mrna_ref2/" data-title="转录组有参分析 （二)" data-hashtags="RNA-seq,STAR,featureCount"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://zkhuang2012.github.io/zh-cn/mrna_ref2/" data-title="转录组有参分析 （二)"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://zkhuang2012.github.io/zh-cn/mrna_ref2/" data-title="转录组有参分析 （二)"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/zh-cn/tags/rna-seq/">RNA-seq</a>,&nbsp;<a href="/zh-cn/tags/star/">STAR</a>,&nbsp;<a href="/zh-cn/tags/featurecount/">featureCount</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/mrna_ref1/" class="prev" rel="prev" title="转录组分析有参分析 （一)"><i class="fas fa-angle-left fa-fw"></i>转录组分析有参分析 （一)</a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.89.4">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.6"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">zkhuang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/gitalk/gitalk.min.css"><script type="text/javascript">
+    window.config = {"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{"gitalk":{"admin":["zkhuang2012"],"clientID":"01f644e8e5ea430a4f00","clientSecret":"1833496f1d9d55741901203f221b9b2a749214cc","id":"2021-12-05T21:30:50+08:00","owner":"zkhuang2012","repo":"zkhuang2012.github.io","title":"转录组有参分析 （二)"}},"data":{"id-1":"Huang ZK's Blog","id-2":"Huang ZK's Blog"},"headerMode":{"desktop":"fixed","mobile":"auto"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};
+</script><script type="text/javascript" src="https://polyfill.io/v3/polyfill.min.js?features=html5shiv%2CElement.prototype.closest%2CrequestAnimationFrame%2CCustomEvent%2CPromise%2CObject.entries%2CObject.assign%2CObject.values%2Cfetch%2CElement.prototype.after%2CArray.prototype.fill%2CIntersectionObserver%2CArray.from%2CArray.prototype.find%2CMath.sign"></script><script type="text/javascript" src="/lib/gitalk/gitalk.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/object-fit-images/ofi.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

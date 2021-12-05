@@ -1,0 +1,36 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>所有文章 - Coffe Chats</title>
+        <link>https://zkhuang2012.github.io/zh-cn/posts/</link>
+        <description>所有文章 | Coffe Chats</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>zkhuang2012@gmail.com (zkhuang)</managingEditor>
+            <webMaster>zkhuang2012@gmail.com (zkhuang)</webMaster><lastBuildDate>Sun, 05 Dec 2021 21:30:50 &#43;0800</lastBuildDate><atom:link href="https://zkhuang2012.github.io/zh-cn/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>转录组有参分析 （二)</title>
+    <link>https://zkhuang2012.github.io/zh-cn/mrna_ref2/</link>
+    <pubDate>Sun, 05 Dec 2021 21:30:50 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://zkhuang2012.github.io/zh-cn/mrna_ref2/</guid>
+    <description><![CDATA[转录组常规有参分析（二）]]></description>
+</item><item>
+    <title>转录组分析有参分析 （一)</title>
+    <link>https://zkhuang2012.github.io/zh-cn/mrna_ref1/</link>
+    <pubDate>Fri, 08 May 2020 21:30:50 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://zkhuang2012.github.io/zh-cn/mrna_ref1/</guid>
+    <description><![CDATA[转录组常规有参分析（一）]]></description>
+</item><item>
+    <title>关于生信软件的安装</title>
+    <link>https://zkhuang2012.github.io/zh-cn/install_intro/</link>
+    <pubDate>Sun, 03 May 2020 23:28:06 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://zkhuang2012.github.io/zh-cn/install_intro/</guid>
+    <description><![CDATA[大黄叨叨]]></description>
+</item><item>
+    <title>关于这个博客</title>
+    <link>https://zkhuang2012.github.io/zh-cn/about/</link>
+    <pubDate>Sun, 28 Jul 2019 18:03:43 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://zkhuang2012.github.io/zh-cn/about/</guid>
+    <description><![CDATA[记录和整理这些年所学的知识。]]></description>
+</item></channel>
+</rss>

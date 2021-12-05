@@ -19,7 +19,7 @@
 <meta name="apple-mobile-web-app-title" content="Huang ZK&#39;s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://zkhuang2012.github.io/" /><link rel="alternate" href="/index.xml" type="application/rss+xml" title="Coffe Chats">
-    <link rel="feed" href="/index.xml" type="application/rss+xml" title="Coffe Chats"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    <link rel="feed" href="/index.xml" type="application/rss+xml" title="Coffe Chats"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.en.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "WebSite",
@@ -37,7 +37,9 @@
             <a href="/" title="Coffe Chats"><span class="header-title-pre"><i class='far fa-coffee fa'></i></span><span id="id-1" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about/"> About </a><a class="menu-item" href="https://github.com/zkhuang2012" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about/"> About </a><a class="menu-item" href="https://github.com/zkhuang2012" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/" selected>English</option><option value="/zh-cn/">简体中文</option></select>
+                    </a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
                     <i class="fas fa-adjust fa-fw"></i>
                 </a>
             </div>
@@ -55,7 +57,9 @@
         </div>
         <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about/" title="">About</a><a class="menu-item" href="https://github.com/zkhuang2012" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
                 <i class="fas fa-adjust fa-fw"></i>
-            </a></div>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/" selected>English</option><option value="/zh-cn/">简体中文</option></select>
+                </a></div>
     </div>
 </header>
 <div class="search-dropdown desktop">
@@ -74,32 +78,21 @@
         alt="Posts"
         title="Posts" /></a></div><h2 class="home-subtitle"><div id="id-3" class="typeit"></div></h2><div class="social-links"><a href="https://github.com/zkhuang2012" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href="https://scholar.google.com/citations?hl=en&amp;user=JSyWS7IAAAAJ" title="Google Scholar" target="_blank" rel="noopener noreffer me"><i data-svg-src="/lib/simple-icons/icons/googlescholar.min.svg"></i></a><a href="https://www.researchgate.net/profile/Huang_Zekun/research" title="ResearchGate" target="_blank" rel="noopener noreffer me"><i class="fab fa-researchgate fa-fw"></i></a><a href="mailto:zkhuang2012@gmail.com" title="Email" rel=" me"><i class="far fa-envelope fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/mrna_ref/">RNA-seq ref-align analysis</a>
+        <a href="/mrna_ref1/">RNA-seq analysis (Reference-align 1)</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>zkhuang</a></span>&nbsp;<span class="post-publish">
             published on&nbsp;<time datetime=2020-05-08>2020-05-08</time>
         </span>&nbsp;
             <span class="post-category">included in<a href="/categories/rna-seq/">
                         <i class="far fa-folder fa-fw"></i>RNA-seq
-                    </a></span></div><div class="content">A regular RNA-seq pipeline</div><div class="post-footer">
-        <a href="/mrna_ref/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/linux/">Linux</a>,&nbsp;<a href="/tags/hisat2/">HISAT2</a>,&nbsp;<a href="/tags/rna-seq/">RNA-seq</a></div></div>
+                    </a></span></div><div class="content">A routine analysis of RNA-seq.</div><div class="post-footer">
+        <a href="/mrna_ref1/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/rna-seq/">RNA-seq</a>,&nbsp;<a href="/tags/hisat2/">HISAT2</a>,&nbsp;<a href="/tags/clusterprofiler/">clusterProfiler</a></div></div>
 </article>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/install_intro/">关于生信软件的安装</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>zkhuang</a></span>&nbsp;<span class="post-publish">
-            published on&nbsp;<time datetime=2020-05-03>2020-05-03</time>
-        </span>&nbsp;
-            <span class="post-category">included in<a href="/categories/linux/">
-                        <i class="far fa-folder fa-fw"></i>Linux
-                    </a></span></div><div class="content">大黄叨叨</div><div class="post-footer">
-        <a href="/install_intro/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/linux/">Linux</a>,&nbsp;<a href="/tags/r/">R</a>,&nbsp;<a href="/tags/python/">python</a></div></div>
-</article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/about/">About this blog</a>
+        <a href="/about/">About this Blog</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>zkhuang</a></span>&nbsp;<span class="post-publish">
             published on&nbsp;<time datetime=2019-07-28>2019-07-28</time>
-        </span></div><div class="content">记录和整理这些年所学的知识。</div><div class="post-footer">
+        </span></div><div class="content">To record and organize what I have learned since 2014.</div><div class="post-footer">
         <a href="/about/">Read More</a></div>
 </article>
 </div></div>
