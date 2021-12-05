@@ -5,12 +5,12 @@
         <description>Linux - Tag - zkhuang&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>zkhuang2012@gmail.com (zkhuang)</managingEditor>
             <webMaster>zkhuang2012@gmail.com (zkhuang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 08 May 2020 21:30:50 &#43;0800</lastBuildDate><atom:link href="https://zkhuang2012.github.io/tags/linux/" rel="self" type="application/rss+xml" /><item>
-    <title>RNA-seq ref-Analysis</title>
+    <title>RNA-seq ref-align analysis</title>
     <link>https://zkhuang2012.github.io/mrna_ref/</link>
     <pubDate>Fri, 08 May 2020 21:30:50 &#43;0800</pubDate>
     <author>Author</author>
     <guid>https://zkhuang2012.github.io/mrna_ref/</guid>
-    <description><![CDATA[A regular RNA-seq ref-analysis pipeline]]></description>
+    <description><![CDATA[A regular RNA-seq pipeline]]></description>
 </item><item>
     <title>关于生信软件的安装</title>
     <link>https://zkhuang2012.github.io/install_intro/</link>

@@ -1,13 +1,9 @@
-# RNA-seq ref-Analysis
+# RNA-seq ref-align analysis
 
 
-## RNA-seq ref-analysis
+## Introduction
 
-This RNA-seq ref-analysis pipeline was built with HISAT2 + Stringtie + Deseq2 + clusterProfiler.
-
-Hoping to make RNA-seq analysis more streamline for new begginers.
-
-All data used in this pipeline located on ``` ${HOME}/../Data_benthic/practice/mRNA ```, only were accessible by our lab.
+This RNA-seq pipeline was built with HISAT2 + Stringtie + Deseq2 + clusterProfiler.
 
 ### 1st, Prepariation
 ```shell

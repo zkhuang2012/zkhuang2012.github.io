@@ -5,17 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>RNA-seq ref-Analysis - zkhuang&#39;s Blog</title>
-        <meta name="Description" content=""><meta property="og:title" content="RNA-seq ref-Analysis" />
-<meta property="og:description" content="A regular RNA-seq ref-analysis pipeline" />
+        <title>RNA-seq ref-align analysis - zkhuang&#39;s Blog</title>
+        <meta name="Description" content=""><meta property="og:title" content="RNA-seq ref-align analysis" />
+<meta property="og:description" content="A regular RNA-seq pipeline" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://zkhuang2012.github.io/mrna_ref/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-05-08T21:30:50+08:00" />
 <meta property="article:modified_time" content="2020-05-08T21:30:50+08:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="RNA-seq ref-Analysis"/>
-<meta name="twitter:description" content="A regular RNA-seq ref-analysis pipeline"/>
+<meta name="twitter:title" content="RNA-seq ref-align analysis"/>
+<meta name="twitter:description" content="A regular RNA-seq pipeline"/>
 <meta name="application-name" content="zkhuang&#39;s Blog">
 <meta name="apple-mobile-web-app-title" content="zkhuang&#39;s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -23,7 +23,7 @@
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "RNA-seq ref-Analysis",
+        "headline": "RNA-seq ref-align analysis",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
@@ -33,7 +33,7 @@
                 "url": "https:\/\/zkhuang2012.github.io\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "Linux, HISAT2, RNA-seq","wordcount":  935 ,
+            },"genre": "posts","keywords": "Linux, HISAT2, RNA-seq","wordcount":  908 ,
         "url": "https:\/\/zkhuang2012.github.io\/mrna_ref\/","datePublished": "2020-05-08T21:30:50+08:00","dateModified": "2020-05-08T21:30:50+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "zkhuang's Blog",
@@ -88,13 +88,13 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">RNA-seq ref-Analysis</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">RNA-seq ref-align analysis</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>zkhuang</a></span>&nbsp;
                     <span class="post-category">included in<a href="/categories/rna-seq/">
                                 <i class="far fa-folder fa-fw"></i>RNA-seq
                             </a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-05-08>2020-05-08</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>about 935 words&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 908 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>5 min&nbsp;</div>
         </div><div class="details toc" id="toc-static">
                 <div class="details-summary toc-title">
@@ -103,7 +103,7 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#rna-seq-ref-analysis">RNA-seq ref-analysis</a>
+    <li><a href="#introduction">Introduction</a>
       <ul>
         <li><a href="#1st-prepariation">1st, Prepariation</a></li>
         <li><a href="#2nd-alignment">2nd, Alignment</a></li>
@@ -115,10 +115,8 @@
     <li><a href="#reference">Reference</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="rna-seq-ref-analysis">RNA-seq ref-analysis</h2>
-<p>This RNA-seq ref-analysis pipeline was built with HISAT2 + Stringtie + Deseq2 + clusterProfiler.</p>
-<p>Hoping to make RNA-seq analysis more streamline for new begginers.</p>
-<p>All data used in this pipeline located on <code>${HOME}/../Data_benthic/practice/mRNA</code>, only were accessible by our lab.</p>
+            </div><div class="content" id="content"><h2 id="introduction">Introduction</h2>
+<p>This RNA-seq pipeline was built with HISAT2 + Stringtie + Deseq2 + clusterProfiler.</p>
 <h3 id="1st-prepariation">1st, Prepariation</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -657,7 +655,7 @@ python2 /public/tools/rna_seq/stringtie-1.3.4/prepDE.py -l <span class="m">150</
                             <a class="link-to-markdown" href="/mrna_ref/index.md" target="_blank">Read Markdown</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://zkhuang2012.github.io/mrna_ref/" data-title="RNA-seq ref-Analysis" data-hashtags="Linux,HISAT2,RNA-seq"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://zkhuang2012.github.io/mrna_ref/" data-title="RNA-seq ref-Analysis"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://zkhuang2012.github.io/mrna_ref/" data-title="RNA-seq ref-Analysis"><i class="fab fa-evernote fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://zkhuang2012.github.io/mrna_ref/" data-title="RNA-seq ref-align analysis" data-hashtags="Linux,HISAT2,RNA-seq"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://zkhuang2012.github.io/mrna_ref/" data-title="RNA-seq ref-align analysis"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://zkhuang2012.github.io/mrna_ref/" data-title="RNA-seq ref-align analysis"><i class="fab fa-evernote fa-fw"></i></a></span>
             </div>
         </div>
     </div>
@@ -687,6 +685,6 @@ python2 /public/tools/rna_seq/stringtie-1.3.4/prepDE.py -l <span class="m">150</
                 <i class="fas fa-comment fa-fw"></i>
             </a>
         </div><link rel="stylesheet" href="/lib/gitalk/gitalk.min.css"><script type="text/javascript">
-    window.config = {"code":{"copyTitle":"Copy to clipboard","maxShownLines":100},"comment":{"gitalk":{"admin":["zkhuang2012"],"clientID":"01f644e8e5ea430a4f00","clientSecret":"1833496f1d9d55741901203f221b9b2a749214cc","id":"2020-05-08T21:30:50+08:00","owner":"zkhuang2012","repo":"zkhuang2012.github.io","title":"RNA-seq ref-Analysis"}},"data":{"id-1":"zkhuang's Blog","id-2":"zkhuang's Blog"},"headerMode":{"desktop":"fixed","mobile":"auto"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};
+    window.config = {"code":{"copyTitle":"Copy to clipboard","maxShownLines":100},"comment":{"gitalk":{"admin":["zkhuang2012"],"clientID":"01f644e8e5ea430a4f00","clientSecret":"1833496f1d9d55741901203f221b9b2a749214cc","id":"2020-05-08T21:30:50+08:00","owner":"zkhuang2012","repo":"zkhuang2012.github.io","title":"RNA-seq ref-align analysis"}},"data":{"id-1":"zkhuang's Blog","id-2":"zkhuang's Blog"},"headerMode":{"desktop":"fixed","mobile":"auto"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};
 </script><script type="text/javascript" src="https://polyfill.io/v3/polyfill.min.js?features=html5shiv%2CElement.prototype.closest%2CrequestAnimationFrame%2CCustomEvent%2CPromise%2CObject.entries%2CObject.assign%2CObject.values%2Cfetch%2CElement.prototype.after%2CArray.prototype.fill%2CIntersectionObserver%2CArray.from%2CArray.prototype.find%2CMath.sign"></script><script type="text/javascript" src="/lib/gitalk/gitalk.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/object-fit-images/ofi.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>
