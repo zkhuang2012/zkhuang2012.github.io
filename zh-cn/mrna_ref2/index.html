@@ -33,7 +33,7 @@
                 "url": "https:\/\/zkhuang2012.github.io\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "RNA-seq, STAR, featureCount","wordcount":  1371 ,
+            },"genre": "posts","keywords": "RNA-seq, STAR, featureCount","wordcount":  1221 ,
         "url": "https:\/\/zkhuang2012.github.io\/zh-cn\/mrna_ref2\/","datePublished": "2021-12-05T21:30:50+08:00","dateModified": "2021-12-05T21:30:50+08:00","publisher": {
                 "@type": "Organization",
                 "name": "zkhuang's Blog",
@@ -98,7 +98,7 @@
                                 <i class="far fa-folder fa-fw"></i>转录组
                             </a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2021-12-05>2021-12-05</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 1371 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1221 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static">
                 <div class="details-summary toc-title">
@@ -109,8 +109,8 @@
   <ul>
     <li><a href="#介绍">介绍</a></li>
     <li><a href="#1st-前期准备">1st, 前期准备</a></li>
-    <li><a href="#2nd-比对">2nd, 比对</a></li>
-    <li><a href="#3rd-转录本定量">3rd, 转录本定量</a></li>
+    <li><a href="#2nd-第一次比对">2nd, 第一次比对</a></li>
+    <li><a href="#3rd-第二次比对">3rd, 第二次比对</a></li>
     <li><a href="#reference">Reference</a></li>
   </ul>
 </nav></div>
@@ -169,7 +169,7 @@ ln -s /path-to-reference-genome/ref.gff <span class="si">${</span><span class="n
 <span class="c1">##/path-to-samples-fastq/为样品fastq存放路径</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="2nd-比对">2nd, 比对</h2>
+</div><h2 id="2nd-第一次比对">2nd, 第一次比对</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -181,100 +181,108 @@ ln -s /path-to-reference-genome/ref.gff <span class="si">${</span><span class="n
 </div><p>Copy the codes below to <strong>02alignment.pbs</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span><span class="lnt">60
-</span><span class="lnt">61
-</span><span class="lnt">62
-</span><span class="lnt">63
-</span><span class="lnt">64
-</span><span class="lnt">65
-</span><span class="lnt">66
-</span><span class="lnt">67
-</span><span class="lnt">68
-</span><span class="lnt">69
-</span><span class="lnt">70
-</span><span class="lnt">71
-</span><span class="lnt">72
-</span><span class="lnt">73
-</span><span class="lnt">74
-</span><span class="lnt">75
-</span><span class="lnt">76
-</span><span class="lnt">77
-</span><span class="lnt">78
-</span><span class="lnt">79
-</span><span class="lnt">80
-</span><span class="lnt">81
-</span><span class="lnt">82
-</span><span class="lnt">83
-</span><span class="lnt">84
-</span><span class="lnt">85
-</span><span class="lnt">86
-</span><span class="lnt">87
-</span><span class="lnt">88
-</span><span class="lnt">89
-</span><span class="lnt">90
-</span><span class="lnt">91
-</span><span class="lnt">92
-</span><span class="lnt">93
-</span><span class="lnt">94
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/bash -x
@@ -284,25 +292,34 @@ ln -s /path-to-reference-genome/ref.gff <span class="si">${</span><span class="n
 <span class="nv">THREADS</span><span class="o">=</span><span class="sb">`</span>expr <span class="si">${</span><span class="nv">NUMCPUS</span><span class="si">}</span> <span class="se">\*</span> 2<span class="sb">`</span>
 <span class="nv">BASEDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/project/mRNA&#34;</span>
 <span class="nv">FASTQLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/samples&#34;</span>
-<span class="nv">GENOMEIDX</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/index/ref_tran&#34;</span>
+
 <span class="nv">GTFFILE</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/genes/ref.gtf&#34;</span>
 <span class="nv">GENOMEFA</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/genome/ref.fa&#34;</span>
+<span class="nv">GENOMEIDXDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$BASEDIR</span><span class="s2">/data/index&#34;</span>
+<span class="nv">GENOMEIDX_TPDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$BASEDIR</span><span class="s2">/data/index_twopass&#34;</span>
 <span class="nv">WRKDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/output&#34;</span>
-<span class="nv">ALIGNLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/hisat2&#34;</span>
-<span class="nv">BALLGOWNLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/ballgown&#34;</span>
-<span class="nv">TEMPLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/tmp&#34;</span>
+<span class="nv">INDEX_TP</span><span class="o">=</span><span class="sb">`</span>ls <span class="si">${</span><span class="nv">WORKDIR</span><span class="si">}</span>/*SJ.out.tab<span class="sb">`</span>
+<span class="nv">LOGFILE</span><span class="o">=</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span>/star_align.log
+
 
 <span class="c1">##NUMCPUS 使用CPU数，根据计算资源调整；</span>
 <span class="c1">##THREADS，线程数为CPU数x2</span>
 <span class="c1">##BASEDIR，proj基本目录</span>
 <span class="c1">##FASTQLOC，reads fastq路径</span>
-<span class="c1">##GENOMEIDX，基因组ref的index文件</span>
 <span class="c1">##GTFFILE，基因组ref的结构注释文件gtf，可从gff文件转换</span>
 <span class="c1">##GENOMEFA，基因组ref的fasta</span>
+<span class="c1">##GENOMEIDXDIR，基因组ref的index路径</span>
+<span class="c1">##GENOMEIDX_TPDIR，基因组ref的index路径</span>
 <span class="c1">##WRKDIR，proj输出目录</span>
-<span class="c1">##ALIGNLOC，比对结果目录</span>
-<span class="c1">##BALLGOWNLOC，定量等结果目录</span>
-<span class="c1">##TEMPLOC，临时文件</span>
+<span class="c1">##INDEX_TP</span>
+<span class="c1">##LOGFILE</span>
+
+<span class="nv">stime</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&#34;%Y-%m-%d %H:%M:%S&#34;</span><span class="sb">`</span>
+
+
+<span class="nb">set</span> -e
+<span class="c1">#set -x</span>
+<span class="nv">SCRIPTARGS</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span>
 
 
 <span class="c1"># 将基因组注释文件gff3转为gtf</span>
@@ -310,15 +327,31 @@ ln -s /path-to-reference-genome/ref.gff <span class="si">${</span><span class="n
 <span class="nb">cd</span> <span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span>/data/genes/
 gffread ref.gff -T -o <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span>
 
-<span class="c1"># 提取剪切位点和外显子信息</span>
-<span class="nb">cd</span> <span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span>/data/index
-python2 /path-to-hisat_install_dir/extract_splice_sites.py <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> &gt; ref.ss
-python2 /path-to-hisat_install_dir/extract_exons.py <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> &gt; ref.exon
-
-<span class="c1">##/path-to-hisat_install_dir/为HISAT2安装路径</span>
 
 <span class="c1"># 建立基因组index</span>
-hisat2-build -p <span class="si">${</span><span class="nv">THREADS</span><span class="si">}</span> --ss ref.ss --exon ref.exon <span class="si">${</span><span class="nv">GENOMEFA</span><span class="si">}</span> ref_tran
+<span class="nb">cd</span> <span class="nv">$WRKDIR</span>
+
+first_index<span class="o">(){</span>
+    <span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;#&gt; START: &#34;</span> <span class="nv">$0</span> <span class="nv">$SCRIPTARGS</span>
+    <span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;   * Generating genome indexes (STAR)&#34;</span>
+
+    STAR --runThreadN <span class="si">${</span><span class="nv">NUMCPUS</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>    --runMode genomeGenerate <span class="se">\
+</span><span class="se"></span>    --genomeDir <span class="si">${</span><span class="nv">GENOMEIDX</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>    --genomeFastaFiles <span class="si">${</span><span class="nv">GENOMEFA</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>    --sjdbGTFfile <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>    --sjdbOverhang <span class="m">149</span>
+
+<span class="c1">##</span>
+<span class="c1">##</span>
+<span class="c1">##</span>
+<span class="c1">##</span>
+<span class="c1">##</span>
+
+    <span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;#&gt; Genome Index DONE.&#34;</span>
+<span class="o">}</span>
+
+first_index 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> tee <span class="si">${</span><span class="nv">LOGFILE</span><span class="si">}</span>
 
 <span class="c1"># 提取reads信息</span>
 <span class="nv">reads1</span><span class="o">=(</span><span class="si">${</span><span class="nv">FASTQLOC</span><span class="si">}</span>/*_1.*<span class="o">)</span>
@@ -331,49 +364,32 @@ hisat2-build -p <span class="si">${</span><span class="nv">THREADS</span><span c
 
 <span class="nb">cd</span> <span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span>
 
-<span class="nv">stime</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&#34;%Y-%m-%d %H:%M:%S&#34;</span><span class="sb">`</span>
-
-<span class="nb">echo</span> <span class="s2">&#34;[</span><span class="nv">$stime</span><span class="s2">] #&gt; START: HISAT2 Alignment&#34;</span>
-
+first_align<span class="o">()</span> <span class="o">{</span>
 <span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span> i&lt;<span class="o">=</span><span class="si">${#</span><span class="nv">reads1</span><span class="p">[@]</span><span class="si">}</span>-1<span class="p">;</span> i++ <span class="o">))</span><span class="p">;</span> <span class="k">do</span>
-	<span class="nv">sample</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">reads1</span><span class="p">[</span><span class="nv">$i</span><span class="p">]%%.*</span><span class="si">}</span><span class="s2">&#34;</span>
-	<span class="nv">sample</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">sample</span><span class="p">%_*</span><span class="si">}</span><span class="s2">&#34;</span>
-<span class="c1">##根据reads1获得sample</span>
+    <span class="nv">sample</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">reads1</span><span class="p">[</span><span class="nv">$i</span><span class="p">]%%.*</span><span class="si">}</span><span class="s2">&#34;</span>
+    <span class="nv">sample</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">sample</span><span class="p">%_*</span><span class="si">}</span><span class="s2">&#34;</span>
 
-	<span class="nb">echo</span> <span class="s2">&#34;[</span><span class="nv">$stime</span><span class="s2">] Processing sample: </span><span class="nv">$sample</span><span class="s2">&#34;</span>
+    <span class="nb">echo</span> <span class="s2">&#34;[</span><span class="nv">$stime</span><span class="s2">] Processing sample: </span><span class="nv">$sample</span><span class="s2">&#34;</span>
+    <span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;   * Running mapping jobs (STAR)&#34;</span>
 
-	<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;   * Alignment of reads to genome (HISAT2)&#34;</span>
-	hisat2 -p <span class="nv">$NUMCPUS</span> <span class="se">\
-</span><span class="se"></span>		--dta <span class="se">\
-</span><span class="se"></span>		-x <span class="si">${</span><span class="nv">GENOMEIDX</span><span class="si">}</span> <span class="se">\
-</span><span class="se"></span>		-1 <span class="si">${</span><span class="nv">FASTQLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">reads1</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span> <span class="se">\
-</span><span class="se"></span>		-2 <span class="si">${</span><span class="nv">FASTQLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">reads2</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span> <span class="se">\
-</span><span class="se"></span>		-S <span class="si">${</span><span class="nv">TEMPLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.sam 2&gt;<span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.alnstats
+    STAR --runThreadN <span class="si">${</span><span class="nv">NUMCPUS</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>    	--genomeDir <span class="si">${</span><span class="nv">GENOMEIDX</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>    	--readFilesIn <span class="si">${</span><span class="nv">FASTQLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">reads1</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span> <span class="si">${</span><span class="nv">FASTQLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">reads2</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>	 	--readFilesCommand zcat <span class="se">\
+</span><span class="se"></span>	 	--outSAMtype BAM Unsorted <span class="se">\
+</span><span class="se"></span>	 	--outFileNamePrefix <span class="si">${</span><span class="nv">sample</span><span class="si">}</span>
 
-<span class="c1">##-p，设置线程数</span>
-<span class="c1">##--dta,</span>
-<span class="c1">##--x，指定基因组index</span>
-<span class="c1">##--1，输入reads1.fastq</span>
-<span class="c1">##--2，输入reads2.fastq</span>
-<span class="c1">##--S，指定sam</span>
-
-	<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;   * Alignments conversion (SAMTools)&#34;</span>
-	samtools view -S -b <span class="si">${</span><span class="nv">TEMPLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.sam <span class="p">|</span> <span class="se">\
-</span><span class="se"></span>		samtools sort -@ <span class="nv">$NUMCPUS</span> -o <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.bam -
-	rm <span class="si">${</span><span class="nv">TEMPLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.sam
-
-	<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;   * Assemble transcripts (StringTie)&#34;</span>
-	stringtie -p <span class="nv">$NUMCPUS</span> <span class="se">\
-</span><span class="se"></span>		-G <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> <span class="se">\
-</span><span class="se"></span>		-o <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.gtf <span class="se">\
-</span><span class="se"></span>		-l <span class="si">${</span><span class="nv">sample</span><span class="si">}</span> <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.bam
-
+    <span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;   * </span><span class="nv">$sample</span><span class="s2"> Finished &#34;</span>
 <span class="k">done</span>
 
-<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;#&gt; Step Two : Alignment Finished!&#34;</span>
+<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span><span class="s2">&#34; 1st mapping jobs (STAR) Finished.&#34;</span>
+<span class="o">}</span>
+
+first_align 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> tee <span class="nv">$LOGFILE</span>
+
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="3rd-转录本定量">3rd, 转录本定量</h2>
+</div><h2 id="3rd-第二次比对">3rd, 第二次比对</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -445,68 +461,63 @@ hisat2-build -p <span class="si">${</span><span class="nv">THREADS</span><span c
 <span class="nv">THREADS</span><span class="o">=</span><span class="sb">`</span>expr <span class="si">${</span><span class="nv">NUMCPUS</span><span class="si">}</span> <span class="se">\*</span> 2<span class="sb">`</span>
 <span class="nv">BASEDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/project/mRNA&#34;</span>
 <span class="nv">FASTQLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/samples&#34;</span>
-<span class="nv">GENOMEIDX</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/index/ref_tran&#34;</span>
+
 <span class="nv">GTFFILE</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/genes/ref.gtf&#34;</span>
 <span class="nv">GENOMEFA</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/genome/ref.fa&#34;</span>
+<span class="nv">GENOMEIDXDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$BASEDIR</span><span class="s2">/data/index&#34;</span>
+<span class="nv">GENOMEIDX_TPDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$BASEDIR</span><span class="s2">/data/index_twopass&#34;</span>
 <span class="nv">WRKDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/output&#34;</span>
-<span class="nv">ALIGNLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/hisat2&#34;</span>
-<span class="nv">BALLGOWNLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/ballgown&#34;</span>
-<span class="nv">TEMPLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/tmp&#34;</span>
+<span class="nv">INDEX_TP</span><span class="o">=</span><span class="sb">`</span>ls <span class="si">${</span><span class="nv">WORKDIR</span><span class="si">}</span>/*SJ.out.tab<span class="sb">`</span>
+<span class="nv">LOGFILE</span><span class="o">=</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span>/star_align.log
 
 <span class="nv">stime</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&#34;%Y-%m-%d %H:%M:%S&#34;</span><span class="sb">`</span>
 
-<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;#&gt; START: STRINGTIE Estimation&#34;</span>
 
-<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;#&gt; Merge all transcripts (StringTie)&#34;</span>
+two-pass_index<span class="o">(){</span>
+    <span class="nb">echo</span> <span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;#&gt; START: &#34;</span> <span class="si">${</span><span class="nv">0</span><span class="si">}</span> <span class="si">${</span><span class="nv">SCRIPTARGS</span><span class="si">}</span>
+    <span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;   * Generating 2-pass genome indexes (STAR)&#34;</span>
+    
+    STAR --runThreadN <span class="si">${</span><span class="nv">NUMCPUS</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>        --runMode genomeGenerate <span class="se">\
+</span><span class="se"></span>        --genomeDir <span class="si">${</span><span class="nv">GENOMEIDX_TP</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>        --genomeFastaFiles <span class="si">${</span><span class="nv">GENOMEFA</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>        --sjdbGTFfile <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>        --sjdbFileChrStartEnd <span class="si">${</span><span class="nv">INDEX2PASS</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>        --sjdbOverhang <span class="m">149</span>
 
-ls -1 <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/*.gtf &gt; <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/mergelist.txt
+	<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;#&gt; 2-pass index DONE.&#34;</span>
 
-stringtie --merge <span class="se">\
-</span><span class="se"></span>	-p <span class="nv">$NUMCPUS</span> <span class="se">\
-</span><span class="se"></span>	-G  <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> <span class="se">\
-</span><span class="se"></span>	-o <span class="si">${</span><span class="nv">BALLGOWNLOC</span><span class="si">}</span>/stringtie_merged.gtf <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/mergelist.txt
-<span class="c1">##</span>
-<span class="c1">##</span>
-<span class="c1">##</span>
-<span class="c1">##</span>
+<span class="o">}</span>
 
-<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;#&gt; Estimate abundance for each sample (StringTie)&#34;</span>
+two-pass_index 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> tee <span class="nv">$LOGFILE</span>
+
+
+two-pass_align<span class="o">()</span> <span class="o">{</span>
 
 <span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span> i&lt;<span class="o">=</span><span class="si">${#</span><span class="nv">reads1</span><span class="p">[@]</span><span class="si">}</span>-1<span class="p">;</span> i++ <span class="o">))</span><span class="p">;</span> <span class="k">do</span>
+    <span class="nv">sample</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">reads1</span><span class="p">[</span><span class="nv">$i</span><span class="p">]%%.*</span><span class="si">}</span><span class="s2">&#34;</span>
+    <span class="nv">sample</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">sample</span><span class="p">%_*</span><span class="si">}</span><span class="s2">&#34;</span>
 
-	<span class="nv">sample</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">reads1</span><span class="p">[</span><span class="nv">$i</span><span class="p">]%%.*</span><span class="si">}</span><span class="s2">&#34;</span>
-	<span class="nv">sample</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">sample</span><span class="p">%_*</span><span class="si">}</span><span class="s2">&#34;</span>
-
-	<span class="k">if</span> <span class="o">[</span> ! -d <span class="si">${</span><span class="nv">BALLGOWNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-		mkdir -p <span class="si">${</span><span class="nv">BALLGOWNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>
-	<span class="k">fi</span>
-
-<span class="c1"># Estimate transcript abundance depend on the referenge genome with ignoring novel transcripts</span>
-	stringtie -e -B <span class="se">\
-</span><span class="se"></span>		-p <span class="nv">$NUMCPUS</span> <span class="se">\
-</span><span class="se"></span>		-G <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> <span class="se">\
-</span><span class="se"></span>		-o <span class="si">${</span><span class="nv">BALLGOWNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.gtf <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.bam
-
-<span class="c1">##</span>
-<span class="c1">##</span>
-<span class="c1">##</span>
-
+    <span class="nb">echo</span> <span class="s2">&#34;[</span><span class="nv">$stime</span><span class="s2">] Processing sample: </span><span class="nv">$sample</span><span class="s2">&#34;</span>
+    <span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;   * Running mapping jobs (STAR)&#34;</span>
+    
+    STAR --runThreadN <span class="si">${</span><span class="nv">NUMCPUS</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>        --genomeDir <span class="si">${</span><span class="nv">GENOMEIDX_TP</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>        --readFilesIn <span class="si">${</span><span class="nv">FASTQLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">reads1</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span> <span class="si">${</span><span class="nv">FASTQLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">reads2</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>        --readFilesCommand zcat <span class="se">\
+</span><span class="se"></span>        --outSAMtype BAM Unsorted <span class="se">\
+</span><span class="se"></span>        --outFileNamePrefix ./align_2pass/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>_2-pass <span class="se">\
+</span><span class="se"></span>    <span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;   * </span><span class="nv">$sample</span><span class="s2"> Finished &#34;</span>
 <span class="k">done</span>
 
-<span class="c1"># Generate transcript_count_matrix.csv and gene_count_matrix.csv using the script under stringtie_install_dir</span>
+<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34; 2-pass mode mapping jobs (STAR) Finished.&#34;</span>
+<span class="o">}</span>
 
-python2 /public/tools/rna_seq/stringtie-1.3.4/prepDE.py -l <span class="m">150</span>
-
-<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;#&gt; Step Three: Estimation Finished!&#34;</span>
+two-pass_align 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> tee <span class="nv">$LOGFILE</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>后续差异基因分析和功能分析，参考RNA-seq analysis (有参分析 一)</p>
 <h2 id="reference">Reference</h2>
-<ul>
-<li><a href="https://www.nature.com/articles/nprot.2016.095" target="_blank" rel="noopener noreffer">https://www.nature.com/articles/nprot.2016.095</a></li>
-<li><a href="http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html" target="_blank" rel="noopener noreffer">http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html</a></li>
-<li><a href="https://guangchuangyu.github.io/software/clusterProfiler/" target="_blank" rel="noopener noreffer">https://guangchuangyu.github.io/software/clusterProfiler/</a></li>
-</ul>
 </div>
     <div style="padding: 10px 1; margin: 10px auto; width: 100%; font-size:16px; text-align: center;">
         <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">

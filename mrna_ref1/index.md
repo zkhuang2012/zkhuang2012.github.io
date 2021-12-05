@@ -1,4 +1,4 @@
-# RNA-seq analysis (Reference-align 1)
+# RNA-seq analysis (Ref-align 1)
 
 
 ## Introduction
