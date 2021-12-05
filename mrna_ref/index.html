@@ -9,9 +9,10 @@
         <meta name="Description" content=""><meta property="og:title" content="RNA-seq ref-Analysis" />
 <meta property="og:description" content="A regular RNA-seq ref-analysis pipeline" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://zkhuang2012.github.io/mrna_ref/" />
+<meta property="og:url" content="https://zkhuang2012.github.io/mrna_ref/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-05-08T21:30:50+08:00" />
-<meta property="article:modified_time" content="2020-07-23T01:25:03+08:00" />
+<meta property="article:modified_time" content="2020-05-08T21:30:50+08:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="RNA-seq ref-Analysis"/>
 <meta name="twitter:description" content="A regular RNA-seq ref-analysis pipeline"/>
@@ -33,7 +34,7 @@
                 "width":  800 ,
                 "height":  600 
             },"genre": "posts","keywords": "Linux, HISAT2, RNA-seq","wordcount":  935 ,
-        "url": "https:\/\/zkhuang2012.github.io\/mrna_ref\/","datePublished": "2020-05-08T21:30:50+08:00","dateModified": "2020-07-23T01:25:03+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/zkhuang2012.github.io\/mrna_ref\/","datePublished": "2020-05-08T21:30:50+08:00","dateModified": "2020-05-08T21:30:50+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "zkhuang's Blog",
                 "logo": {
@@ -121,7 +122,7 @@
 <h3 id="1st-prepariation">1st, Prepariation</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -136,7 +137,7 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># Directory Deployment</span>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># Directory Deployment</span>
 mkdir -p <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/project/mRNA/<span class="o">{</span>bin,data/<span class="o">{</span>genes,genome,index,samples<span class="o">}</span>,output/<span class="o">{</span>ballgown,hisat2,tmp<span class="o">}}</span>
 
 <span class="c1"># Data link</span>
@@ -154,16 +155,16 @@ ln -s <span class="si">${</span><span class="nv">PWD</span><span class="si">}</s
 </div><h3 id="2nd-alignment">2nd, Alignment</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/project/mRNA/bin
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/project/mRNA/bin
 </code></pre></td></tr></table>
 </div>
 </div><p>Copy the codes below to <strong>02alignment.pbs</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -236,7 +237,7 @@ ln -s <span class="si">${</span><span class="nv">PWD</span><span class="si">}</s
 </span><span class="lnt">71
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/bash -x
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/bash -x
 </span><span class="cp"></span><span class="c1">#PBS -N ref_mRNA_02alignment</span>
 <span class="c1">#PBS -o ref_mRNA_02alignment.out</span>
 <span class="c1">#PBS -e ref_mRNA_02alignment.err</span>
@@ -312,11 +313,11 @@ hisat2-build -p <span class="m">50</span> --ss Hdh.ss --exon Hdh.exon <span clas
 </div><p>Then run via PBS:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">qsub 02alignment.pbs
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">qsub 02alignment.pbs
 
 </code></pre></td></tr></table>
 </div>
@@ -324,7 +325,7 @@ hisat2-build -p <span class="m">50</span> --ss Hdh.ss --exon Hdh.exon <span clas
 <p>Copy the codes below to <strong>03estimation.pbs</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -386,7 +387,7 @@ hisat2-build -p <span class="m">50</span> --ss Hdh.ss --exon Hdh.exon <span clas
 </span><span class="lnt">60
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/bash -x
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/bash -x
 </span><span class="cp"></span><span class="c1">#PBS -N ref_mRNA_03estimation</span>
 <span class="c1">#PBS -o ref_mRNA_03estimation.out</span>
 <span class="c1">#PBS -e ref_mRNA_03estimation.err</span>
@@ -451,18 +452,18 @@ python2 /public/tools/rna_seq/stringtie-1.3.4/prepDE.py -l <span class="m">150</
 </div><p>Then run via PBS:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">qsub 03estimation.pbs
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">qsub 03estimation.pbs
 
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="4th-differential-expression-analysis">4th, Differential expression analysis</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -504,7 +505,7 @@ python2 /public/tools/rna_seq/stringtie-1.3.4/prepDE.py -l <span class="m">150</
 </span><span class="lnt">40
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-R" data-lang="R">
+<pre tabindex="0" class="chroma"><code class="language-R" data-lang="R">
 <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">public</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">benthic</span><span class="o">/</span><span class="n">Data_benthic</span><span class="o">/</span><span class="n">practice</span><span class="o">/</span><span class="n">mRNA</span><span class="o">/</span><span class="n">phenodata.csv</span> <span class="o">$</span><span class="p">{</span><span class="n">HOME</span><span class="p">}</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">mRNA</span><span class="o">/</span><span class="n">output</span><span class="o">/</span><span class="n">phenodata.csv</span>
 
 <span class="n">cd</span> <span class="o">$</span><span class="p">{</span><span class="n">HOME</span><span class="p">}</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">mRNA</span><span class="o">/</span><span class="n">output</span>
@@ -549,7 +550,7 @@ python2 /public/tools/rna_seq/stringtie-1.3.4/prepDE.py -l <span class="m">150</
 </div><h3 id="5th-funtional-enrichment-analysis">5th, Funtional enrichment analysis</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -588,7 +589,7 @@ python2 /public/tools/rna_seq/stringtie-1.3.4/prepDE.py -l <span class="m">150</
 </span><span class="lnt">37
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-R" data-lang="R">
+<pre tabindex="0" class="chroma"><code class="language-R" data-lang="R">
 <span class="n">cat</span> <span class="o">&lt;&lt;</span><span class="n">EOF</span> <span class="o">&gt;&gt;</span><span class="n">enrichment.R</span>
 
 <span class="n">sig_gene</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#34;./Red_HvC.sig.csv&#34;</span><span class="p">,</span><span class="n">header</span> <span class="o">=</span> <span class="bp">T</span><span class="p">)</span>
@@ -629,9 +630,9 @@ python2 /public/tools/rna_seq/stringtie-1.3.4/prepDE.py -l <span class="m">150</
 </div>
 </div><h2 id="reference">Reference</h2>
 <ul>
-<li><a href="https://www.nature.com/articles/nprot.2016.095">https://www.nature.com/articles/nprot.2016.095</a></li>
-<li><a href="http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html</a></li>
-<li><a href="https://guangchuangyu.github.io/software/clusterProfiler/">https://guangchuangyu.github.io/software/clusterProfiler/</a></li>
+<li><a href="https://www.nature.com/articles/nprot.2016.095" target="_blank" rel="noopener noreffer">https://www.nature.com/articles/nprot.2016.095</a></li>
+<li><a href="http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html" target="_blank" rel="noopener noreffer">http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html</a></li>
+<li><a href="https://guangchuangyu.github.io/software/clusterProfiler/" target="_blank" rel="noopener noreffer">https://guangchuangyu.github.io/software/clusterProfiler/</a></li>
 </ul>
 </div>
     <div style="padding: 10px 1; margin: 10px auto; width: 100%; font-size:16px; text-align: center;">
@@ -647,7 +648,7 @@ python2 /public/tools/rna_seq/stringtie-1.3.4/prepDE.py -l <span class="m">150</
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>The article was updated on 2020-07-23</span>
+                <span>The article was updated on 2020-05-08</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -675,8 +676,8 @@ python2 /public/tools/rna_seq/stringtie-1.3.4/prepDE.py -l <span class="m">150</
             </noscript></div></article></div>
             </main><footer class="footer">
 
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.69.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.6"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">zkhuang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.89.4">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.6"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">zkhuang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 

@@ -9,9 +9,10 @@
         <meta name="Description" content=""><meta property="og:title" content="关于生信软件的安装" />
 <meta property="og:description" content="大黄唠叨之生信软件安装" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://zkhuang2012.github.io/install_intro/" />
+<meta property="og:url" content="https://zkhuang2012.github.io/install_intro/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-05-03T23:28:06+08:00" />
-<meta property="article:modified_time" content="2020-07-23T01:25:03+08:00" />
+<meta property="article:modified_time" content="2020-05-03T23:28:06+08:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="关于生信软件的安装"/>
 <meta name="twitter:description" content="大黄唠叨之生信软件安装"/>
@@ -33,7 +34,7 @@
                 "width":  800 ,
                 "height":  600 
             },"genre": "posts","keywords": "Linux, R, python","wordcount":  563 ,
-        "url": "https:\/\/zkhuang2012.github.io\/install_intro\/","datePublished": "2020-05-03T23:28:06+08:00","dateModified": "2020-07-23T01:25:03+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/zkhuang2012.github.io\/install_intro\/","datePublished": "2020-05-03T23:28:06+08:00","dateModified": "2020-05-03T23:28:06+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
                 "@type": "Organization",
                 "name": "zkhuang's Blog",
                 "logo": {
@@ -124,7 +125,7 @@
 <p>开始之前，建议一开始先把工作目录都规划好，养成好习惯。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -141,7 +142,7 @@
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"># 部署工作目录
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"># 部署工作目录
 mkdir -p {bin,download,local/{app,include,lib},project,perl5}
 
 tree --charset ASCII -L 2
@@ -165,10 +166,10 @@ tree --charset ASCII -L 2
 <li>pel5	用来装perl module，后面会介绍；</li>
 <li>project	用来管理和分析项目</li>
 </ul>
-<p>建好文件夹后就要在开始进行环境变量设置，即在<strong>$HOME/.bashrc</strong>中添加如下内容，添加后记得<code>source $HOME/.bashrc</code></p>
+<p>建好文件夹后就要在开始进行环境变量设置，即在**$HOME/.bashrc**中添加如下内容，添加后记得<code>source $HOME/.bashrc</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -192,7 +193,7 @@ tree --charset ASCII -L 2
 </span><span class="lnt">22
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"># Local bin,app
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"># Local bin,app
 export LOCAL_BIN=$HOME/bin
 export LOCAL_HOME=$HOME/local
 export LOCAL_APP=$LOCAL_HOME/app
@@ -222,7 +223,7 @@ export PATH=$LOCAL_PERL_EDITION/bin:$PATH
 <p><strong>2nd</strong>: 源代码(source code)安装，解压后，一定要好好看README.txt或者INSTALL，虽然一般来说就是三部曲。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -231,7 +232,7 @@ export PATH=$LOCAL_PERL_EDITION/bin:$PATH
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"># configure中通过--prefix=/path-to-install/来指定安装路径
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"># configure中通过--prefix=/path-to-install/来指定安装路径
 ./configure --prefix=/path-to-install/
 # make编译可以通过-j4来设置线程数，这里是4个线程，加速编译
 make -j4
@@ -244,7 +245,7 @@ make install
 <p><strong>3rd</strong>: 这时候还有conda，因为系统默认是python2，所以下个python2版本的conda</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -254,7 +255,7 @@ make install
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">
 # 创建环境，如env_test
 conda create -n env_test
 # 激活环境
@@ -272,7 +273,7 @@ conda install python=3.6
 <p>如果你的工作目录部署和环境配置是和我上面介绍的一样的话，那么，这下面R-3.6.3的安装代码<strong>直接复制到我们的集群上运行</strong>即可。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -329,7 +330,7 @@ conda install python=3.6
 </span><span class="lnt">55
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">
 # 经常要装多个R版本，所以索性建个R文件夹，子文件夹再分版本
 mkdir -p $LOCAL_APP/R
 
@@ -396,7 +397,7 @@ EOF
 <h4 id="通过命令参数和环境变量设置安装私有包">通过命令参数和环境变量设置安装私有包</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -417,7 +418,7 @@ EOF
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"># 安装私有包
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"># 安装私有包
 ## 通过pip安装，简单粗暴
 ###pip install --user &lt;packagename&gt;
 ## 或者下载module source code然后执行以下命令
@@ -442,7 +443,7 @@ source $HOME/.bashrc
 <p>如果系统连python2安装缺少某些库，那一样只能源代码安装python，这里以安装python3.6为案例。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -464,7 +465,7 @@ source $HOME/.bashrc
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"># 下载软件安装包
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"># 下载软件安装包
 axel -a -o $HOME/download https://www.python.org/ftp/python/3.6.10/Python-3.6.10.tgz
 # 解压压缩包
 tar -xvzf $HOME/download/Python-3.6.10.tgz -C $LOCAL_APP/
@@ -492,7 +493,7 @@ source $HOME/.bashrc
 而且十分不建议自己安装perl，过程比较麻烦，还要主要安装perl版本与系统版本是一致的，不然有的软件安装默认调用系统perl，一旦模块对不同版本不兼容，就会各种报错，相当郁闷。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -517,7 +518,7 @@ source $HOME/.bashrc
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"># cpanm是安装Perl模块的最方便的方法，自动下载安装依赖包。
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"># cpanm是安装Perl模块的最方便的方法，自动下载安装依赖包。
 # cpanm其实是一个可执行文件而已，将它下载到bin目录，然后添加执行权限就可以了。
 curl -L http://cpanmin.us/ -o $LOCAL_BIN/cpanm &amp;&amp; chmod +x $LOCAL_BIN/cpanm
 
@@ -544,8 +545,8 @@ pm-uninstal MongoDB
 </div>
 </div><h2 id="参考">参考</h2>
 <ul>
-<li><a href="http://blog.shenwei.me/about/">http://blog.shenwei.me/about/</a></li>
-<li><a href="http://www.ttlsa.com/perl/use-cpanm-to-install-perl-modules/">http://www.ttlsa.com/perl/use-cpanm-to-install-perl-modules/</a></li>
+<li><a href="http://blog.shenwei.me/about/" target="_blank" rel="noopener noreffer">http://blog.shenwei.me/about/</a></li>
+<li><a href="http://www.ttlsa.com/perl/use-cpanm-to-install-perl-modules/" target="_blank" rel="noopener noreffer">http://www.ttlsa.com/perl/use-cpanm-to-install-perl-modules/</a></li>
 </ul>
 <h2 id="end">END</h2>
 </div>
@@ -562,7 +563,7 @@ pm-uninstal MongoDB
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>The article was updated on 2020-07-23</span>
+                <span>The article was updated on 2020-05-03</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -591,8 +592,8 @@ pm-uninstal MongoDB
             </noscript></div></article></div>
             </main><footer class="footer">
 
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.69.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.6"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">zkhuang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.89.4">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.6"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">zkhuang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 
