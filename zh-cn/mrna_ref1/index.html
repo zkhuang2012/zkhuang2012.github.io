@@ -33,7 +33,7 @@
                 "url": "https:\/\/zkhuang2012.github.io\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "RNA-seq, HISAT2, DESeq2, clusterProfiler","wordcount":  1596 ,
+            },"genre": "posts","keywords": "RNA-seq, HISAT2, DESeq2, clusterProfiler","wordcount":  1698 ,
         "url": "https:\/\/zkhuang2012.github.io\/zh-cn\/mrna_ref1\/","datePublished": "2020-05-08T21:30:50+08:00","dateModified": "2020-05-08T21:30:50+08:00","publisher": {
                 "@type": "Organization",
                 "name": "zkhuang's Blog",
@@ -125,7 +125,7 @@
                                 <i class="far fa-folder fa-fw"></i>转录组
                             </a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-05-08>2020-05-08</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 1596 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1698 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 4 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static">
                 <div class="details-summary toc-title">
@@ -171,16 +171,20 @@
 </span><span class="lnt">21
 </span><span class="lnt">22
 </span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 部署工作环境</span>
-mkdir -p <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/project/mRNA/<span class="o">{</span>bin,data/<span class="o">{</span>genes,genome,index,samples<span class="o">}</span>,output/<span class="o">{</span>ballgown,hisat2,tmp<span class="o">}}</span>
+mkdir -p <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/project/mRNA/<span class="o">{</span>bin,data/<span class="o">{</span>genes,genome,index,samples<span class="o">}</span>,output/<span class="o">{</span>hisat2_dir,stringtie_dir,tmp<span class="o">}}</span>
 
 <span class="c1">##bin，存放分析脚本</span>
 <span class="c1">##data/genes，存放基因组gff</span>
 <span class="c1">##data/genome,存放基因组fasta</span>
 <span class="c1">##data/index，存放基因组索引文件index</span>
 <span class="c1">##data/samples，存放样品数据reads fastq</span>
+<span class="c1">##output/hisat2_dir,存放比对结果，如bam</span>
+<span class="c1">##output/stringtie_dir，存放定量结果等</span>
 
 <span class="c1"># 准备数据</span>
 ln -s /path-to-reference-genome/ref.fa <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/project/mRNA/data/genome/
@@ -199,15 +203,6 @@ ln -s /path-to-reference-genome/ref.gff <span class="si">${</span><span class="n
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="2nd-比对">2nd, 比对</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/project/mRNA/bin
-</code></pre></td></tr></table>
-</div>
-</div><p>Copy the codes below to <strong>02alignment.pbs</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -303,7 +298,6 @@ ln -s /path-to-reference-genome/ref.gff <span class="si">${</span><span class="n
 </span><span class="lnt">91
 </span><span class="lnt">92
 </span><span class="lnt">93
-</span><span class="lnt">94
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/bash -x
@@ -317,8 +311,8 @@ ln -s /path-to-reference-genome/ref.gff <span class="si">${</span><span class="n
 <span class="nv">GTFFILE</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/genes/ref.gtf&#34;</span>
 <span class="nv">GENOMEFA</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/genome/ref.fa&#34;</span>
 <span class="nv">WRKDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/output&#34;</span>
-<span class="nv">ALIGNLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/hisat2&#34;</span>
-<span class="nv">BALLGOWNLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/ballgown&#34;</span>
+<span class="nv">ALIGNLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/hisat2_dir&#34;</span>
+<span class="nv">STRINGTIELOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/stringtie_dir&#34;</span>
 <span class="nv">TEMPLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/tmp&#34;</span>
 
 <span class="c1">##NUMCPUS 使用CPU数，根据计算资源调整；</span>
@@ -330,12 +324,11 @@ ln -s /path-to-reference-genome/ref.gff <span class="si">${</span><span class="n
 <span class="c1">##GENOMEFA，基因组ref的fasta</span>
 <span class="c1">##WRKDIR，proj输出目录</span>
 <span class="c1">##ALIGNLOC，比对结果目录</span>
-<span class="c1">##BALLGOWNLOC，定量等结果目录</span>
+<span class="c1">##STRINGTIELOC，定量等结果目录</span>
 <span class="c1">##TEMPLOC，临时文件</span>
 
 
 <span class="c1"># 将基因组注释文件gff3转为gtf</span>
-
 <span class="nb">cd</span> <span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span>/data/genes/
 gffread ref.gff -T -o <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span>
 
@@ -478,8 +471,8 @@ hisat2-build -p <span class="si">${</span><span class="nv">THREADS</span><span c
 <span class="nv">GTFFILE</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/genes/ref.gtf&#34;</span>
 <span class="nv">GENOMEFA</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/data/genome/ref.fa&#34;</span>
 <span class="nv">WRKDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2">/output&#34;</span>
-<span class="nv">ALIGNLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/hisat2&#34;</span>
-<span class="nv">BALLGOWNLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/ballgown&#34;</span>
+<span class="nv">ALIGNLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/hisat2_dir&#34;</span>
+<span class="nv">STRINGTIELOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/stringtie_dir&#34;</span>
 <span class="nv">TEMPLOC</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span><span class="s2">/tmp&#34;</span>
 
 <span class="nv">stime</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&#34;%Y-%m-%d %H:%M:%S&#34;</span><span class="sb">`</span>
@@ -493,7 +486,7 @@ ls -1 <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si"
 stringtie --merge <span class="se">\
 </span><span class="se"></span>	-p <span class="nv">$NUMCPUS</span> <span class="se">\
 </span><span class="se"></span>	-G  <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> <span class="se">\
-</span><span class="se"></span>	-o <span class="si">${</span><span class="nv">BALLGOWNLOC</span><span class="si">}</span>/stringtie_merged.gtf <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/mergelist.txt
+</span><span class="se"></span>	-o <span class="si">${</span><span class="nv">STRINGTIELOC</span><span class="si">}</span>/stringtie_merged.gtf <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/mergelist.txt
 <span class="c1">##</span>
 <span class="c1">##</span>
 <span class="c1">##</span>
@@ -506,15 +499,15 @@ stringtie --merge <span class="se">\
 	<span class="nv">sample</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">reads1</span><span class="p">[</span><span class="nv">$i</span><span class="p">]%%.*</span><span class="si">}</span><span class="s2">&#34;</span>
 	<span class="nv">sample</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">sample</span><span class="p">%_*</span><span class="si">}</span><span class="s2">&#34;</span>
 
-	<span class="k">if</span> <span class="o">[</span> ! -d <span class="si">${</span><span class="nv">BALLGOWNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-		mkdir -p <span class="si">${</span><span class="nv">BALLGOWNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>
+	<span class="k">if</span> <span class="o">[</span> ! -d <span class="si">${</span><span class="nv">STRINGTIELOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+		mkdir -p <span class="si">${</span><span class="nv">STRINGTIELOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>
 	<span class="k">fi</span>
 
-<span class="c1"># Estimate transcript abundance depend on the referenge genome with ignoring novel transcripts</span>
+<span class="c1"># 转录本定量</span>
 	stringtie -e -B <span class="se">\
 </span><span class="se"></span>		-p <span class="nv">$NUMCPUS</span> <span class="se">\
 </span><span class="se"></span>		-G <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> <span class="se">\
-</span><span class="se"></span>		-o <span class="si">${</span><span class="nv">BALLGOWNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.gtf <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.bam
+</span><span class="se"></span>		-o <span class="si">${</span><span class="nv">STRINGTIELOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.gtf <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.bam
 
 <span class="c1">##</span>
 <span class="c1">##</span>
@@ -522,7 +515,7 @@ stringtie --merge <span class="se">\
 
 <span class="k">done</span>
 
-<span class="c1"># Generate transcript_count_matrix.csv and gene_count_matrix.csv using the script under stringtie_install_dir</span>
+<span class="c1"># 基于transcript_count_matrix.csv和gene_count_matrix.csv提取read count矩阵</span>
 
 python2 /public/tools/rna_seq/stringtie-1.3.4/prepDE.py -l <span class="m">150</span>
 

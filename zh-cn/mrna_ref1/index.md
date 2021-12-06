@@ -8,13 +8,15 @@
 ## 1st, 前期准备
 ```shell
 # 部署工作环境
-mkdir -p ${HOME}/project/mRNA/{bin,data/{genes,genome,index,samples},output/{ballgown,hisat2,tmp}}
+mkdir -p ${HOME}/project/mRNA/{bin,data/{genes,genome,index,samples},output/{hisat2_dir,stringtie_dir,tmp}}
 
 ##bin，存放分析脚本
 ##data/genes，存放基因组gff
 ##data/genome,存放基因组fasta
 ##data/index，存放基因组索引文件index
 ##data/samples，存放样品数据reads fastq
+##output/hisat2_dir,存放比对结果，如bam
+##output/stringtie_dir，存放定量结果等
 
 # 准备数据
 ln -s /path-to-reference-genome/ref.fa ${HOME}/project/mRNA/data/genome/
@@ -34,11 +36,6 @@ done
 
 ## 2nd, 比对
 ```shell
-cd ${HOME}/project/mRNA/bin
-```
-Copy the codes below to **02alignment.pbs**
-
-```shell
 #!/bin/bash -x
 
 # 环境参数配置
@@ -50,8 +47,8 @@ GENOMEIDX="${BASEDIR}/data/index/ref_tran"
 GTFFILE="${BASEDIR}/data/genes/ref.gtf"
 GENOMEFA="${BASEDIR}/data/genome/ref.fa"
 WRKDIR="${BASEDIR}/output"
-ALIGNLOC="${WRKDIR}/hisat2"
-BALLGOWNLOC="${WRKDIR}/ballgown"
+ALIGNLOC="${WRKDIR}/hisat2_dir"
+STRINGTIELOC="${WRKDIR}/stringtie_dir"
 TEMPLOC="${WRKDIR}/tmp"
 
 ##NUMCPUS 使用CPU数，根据计算资源调整；
@@ -63,12 +60,11 @@ TEMPLOC="${WRKDIR}/tmp"
 ##GENOMEFA，基因组ref的fasta
 ##WRKDIR，proj输出目录
 ##ALIGNLOC，比对结果目录
-##BALLGOWNLOC，定量等结果目录
+##STRINGTIELOC，定量等结果目录
 ##TEMPLOC，临时文件
 
 
 # 将基因组注释文件gff3转为gtf
-
 cd ${BASEDIR}/data/genes/
 gffread ref.gff -T -o ${GTFFILE}
 
@@ -149,8 +145,8 @@ GENOMEIDX="${BASEDIR}/data/index/ref_tran"
 GTFFILE="${BASEDIR}/data/genes/ref.gtf"
 GENOMEFA="${BASEDIR}/data/genome/ref.fa"
 WRKDIR="${BASEDIR}/output"
-ALIGNLOC="${WRKDIR}/hisat2"
-BALLGOWNLOC="${WRKDIR}/ballgown"
+ALIGNLOC="${WRKDIR}/hisat2_dir"
+STRINGTIELOC="${WRKDIR}/stringtie_dir"
 TEMPLOC="${WRKDIR}/tmp"
 
 stime=`date +"%Y-%m-%d %H:%M:%S"`
@@ -164,7 +160,7 @@ ls -1 ${ALIGNLOC}/*.gtf > ${ALIGNLOC}/mergelist.txt
 stringtie --merge \
 	-p $NUMCPUS \
 	-G  ${GTFFILE} \
-	-o ${BALLGOWNLOC}/stringtie_merged.gtf ${ALIGNLOC}/mergelist.txt
+	-o ${STRINGTIELOC}/stringtie_merged.gtf ${ALIGNLOC}/mergelist.txt
 ##
 ##
 ##
@@ -177,15 +173,15 @@ for ((i=0; i<=${#reads1[@]}-1; i++ )); do
 	sample="${reads1[$i]%%.*}"
 	sample="${sample%_*}"
 
-	if [ ! -d ${BALLGOWNLOC}/${sample} ]; then
-		mkdir -p ${BALLGOWNLOC}/${sample}
+	if [ ! -d ${STRINGTIELOC}/${sample} ]; then
+		mkdir -p ${STRINGTIELOC}/${sample}
 	fi
 
-# Estimate transcript abundance depend on the referenge genome with ignoring novel transcripts
+# 转录本定量
 	stringtie -e -B \
 		-p $NUMCPUS \
 		-G ${GTFFILE} \
-		-o ${BALLGOWNLOC}/${sample}/${sample}.gtf ${ALIGNLOC}/${sample}.bam
+		-o ${STRINGTIELOC}/${sample}/${sample}.gtf ${ALIGNLOC}/${sample}.bam
 
 ##
 ##
@@ -193,7 +189,7 @@ for ((i=0; i<=${#reads1[@]}-1; i++ )); do
 
 done
 
-# Generate transcript_count_matrix.csv and gene_count_matrix.csv using the script under stringtie_install_dir
+# 基于transcript_count_matrix.csv和gene_count_matrix.csv提取read count矩阵
 
 python2 /public/tools/rna_seq/stringtie-1.3.4/prepDE.py -l 150
 
