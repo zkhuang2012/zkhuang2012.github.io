@@ -33,7 +33,7 @@
                 "url": "https:\/\/zkhuang2012.github.io\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "RNA-seq, STAR, featureCount","wordcount":  1219 ,
+            },"genre": "posts","keywords": "RNA-seq, STAR, featureCount","wordcount":  1333 ,
         "url": "https:\/\/zkhuang2012.github.io\/zh-cn\/mrna_ref2\/","datePublished": "2021-12-05T21:30:50+08:00","dateModified": "2021-12-05T21:30:50+08:00","publisher": {
                 "@type": "Organization",
                 "name": "zkhuang's Blog",
@@ -125,7 +125,7 @@
                                 <i class="far fa-folder fa-fw"></i>转录组
                             </a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2021-12-05>2021-12-05</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 1219 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1333 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static">
                 <div class="details-summary toc-title">
@@ -173,7 +173,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 部署工作环境</span>
-mkdir -p <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/project/mRNA/<span class="o">{</span>bin,data/<span class="o">{</span>genes,genome,index,samples<span class="o">}</span>,output/<span class="o">{</span>ballgown,hisat2,tmp<span class="o">}}</span>
+mkdir -p <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/project/mRNA/<span class="o">{</span>bin,data/<span class="o">{</span>genes,genome,index,samples<span class="o">}</span>,output<span class="o">}</span>
 
 <span class="c1">##bin，存放分析脚本</span>
 <span class="c1">##data/genes，存放基因组gff</span>
@@ -200,108 +200,105 @@ ln -s /path-to-reference-genome/ref.gff <span class="si">${</span><span class="n
 </div><h2 id="2nd-第一次比对">2nd, 第一次比对</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">  1
-</span><span class="lnt">  2
-</span><span class="lnt">  3
-</span><span class="lnt">  4
-</span><span class="lnt">  5
-</span><span class="lnt">  6
-</span><span class="lnt">  7
-</span><span class="lnt">  8
-</span><span class="lnt">  9
-</span><span class="lnt"> 10
-</span><span class="lnt"> 11
-</span><span class="lnt"> 12
-</span><span class="lnt"> 13
-</span><span class="lnt"> 14
-</span><span class="lnt"> 15
-</span><span class="lnt"> 16
-</span><span class="lnt"> 17
-</span><span class="lnt"> 18
-</span><span class="lnt"> 19
-</span><span class="lnt"> 20
-</span><span class="lnt"> 21
-</span><span class="lnt"> 22
-</span><span class="lnt"> 23
-</span><span class="lnt"> 24
-</span><span class="lnt"> 25
-</span><span class="lnt"> 26
-</span><span class="lnt"> 27
-</span><span class="lnt"> 28
-</span><span class="lnt"> 29
-</span><span class="lnt"> 30
-</span><span class="lnt"> 31
-</span><span class="lnt"> 32
-</span><span class="lnt"> 33
-</span><span class="lnt"> 34
-</span><span class="lnt"> 35
-</span><span class="lnt"> 36
-</span><span class="lnt"> 37
-</span><span class="lnt"> 38
-</span><span class="lnt"> 39
-</span><span class="lnt"> 40
-</span><span class="lnt"> 41
-</span><span class="lnt"> 42
-</span><span class="lnt"> 43
-</span><span class="lnt"> 44
-</span><span class="lnt"> 45
-</span><span class="lnt"> 46
-</span><span class="lnt"> 47
-</span><span class="lnt"> 48
-</span><span class="lnt"> 49
-</span><span class="lnt"> 50
-</span><span class="lnt"> 51
-</span><span class="lnt"> 52
-</span><span class="lnt"> 53
-</span><span class="lnt"> 54
-</span><span class="lnt"> 55
-</span><span class="lnt"> 56
-</span><span class="lnt"> 57
-</span><span class="lnt"> 58
-</span><span class="lnt"> 59
-</span><span class="lnt"> 60
-</span><span class="lnt"> 61
-</span><span class="lnt"> 62
-</span><span class="lnt"> 63
-</span><span class="lnt"> 64
-</span><span class="lnt"> 65
-</span><span class="lnt"> 66
-</span><span class="lnt"> 67
-</span><span class="lnt"> 68
-</span><span class="lnt"> 69
-</span><span class="lnt"> 70
-</span><span class="lnt"> 71
-</span><span class="lnt"> 72
-</span><span class="lnt"> 73
-</span><span class="lnt"> 74
-</span><span class="lnt"> 75
-</span><span class="lnt"> 76
-</span><span class="lnt"> 77
-</span><span class="lnt"> 78
-</span><span class="lnt"> 79
-</span><span class="lnt"> 80
-</span><span class="lnt"> 81
-</span><span class="lnt"> 82
-</span><span class="lnt"> 83
-</span><span class="lnt"> 84
-</span><span class="lnt"> 85
-</span><span class="lnt"> 86
-</span><span class="lnt"> 87
-</span><span class="lnt"> 88
-</span><span class="lnt"> 89
-</span><span class="lnt"> 90
-</span><span class="lnt"> 91
-</span><span class="lnt"> 92
-</span><span class="lnt"> 93
-</span><span class="lnt"> 94
-</span><span class="lnt"> 95
-</span><span class="lnt"> 96
-</span><span class="lnt"> 97
-</span><span class="lnt"> 98
-</span><span class="lnt"> 99
-</span><span class="lnt">100
-</span><span class="lnt">101
-</span><span class="lnt">102
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span><span class="lnt">97
+</span><span class="lnt">98
+</span><span class="lnt">99
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/bash -x
@@ -320,7 +317,6 @@ ln -s /path-to-reference-genome/ref.gff <span class="si">${</span><span class="n
 <span class="nv">INDEX_TP</span><span class="o">=</span><span class="sb">`</span>ls <span class="si">${</span><span class="nv">WORKDIR</span><span class="si">}</span>/*SJ.out.tab<span class="sb">`</span>
 <span class="nv">LOGFILE</span><span class="o">=</span><span class="si">${</span><span class="nv">WRKDIR</span><span class="si">}</span>/star_align.log
 
-
 <span class="c1">##NUMCPUS 使用CPU数，根据计算资源调整；</span>
 <span class="c1">##THREADS，线程数为CPU数x2</span>
 <span class="c1">##BASEDIR，proj基本目录</span>
@@ -330,16 +326,13 @@ ln -s /path-to-reference-genome/ref.gff <span class="si">${</span><span class="n
 <span class="c1">##GENOMEIDXDIR，基因组ref的index路径</span>
 <span class="c1">##GENOMEIDX_TPDIR，基因组ref的index路径</span>
 <span class="c1">##WRKDIR，proj输出目录</span>
-<span class="c1">##INDEX_TP</span>
-<span class="c1">##LOGFILE</span>
-
-<span class="nv">stime</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&#34;%Y-%m-%d %H:%M:%S&#34;</span><span class="sb">`</span>
-
+<span class="c1">##INDEX_TP，基因组two pass的index路径</span>
+<span class="c1">##LOGFILE，日志文件</span>
 
 <span class="nb">set</span> -e
 <span class="c1">#set -x</span>
 <span class="nv">SCRIPTARGS</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span>
-
+<span class="nv">stime</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&#34;%Y-%m-%d %H:%M:%S&#34;</span><span class="sb">`</span>
 
 <span class="c1"># 将基因组注释文件gff3转为gtf</span>
 
@@ -361,11 +354,12 @@ first_index<span class="o">(){</span>
 </span><span class="se"></span>    --sjdbGTFfile <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> <span class="se">\
 </span><span class="se"></span>    --sjdbOverhang <span class="m">149</span>
 
-<span class="c1">##</span>
-<span class="c1">##</span>
-<span class="c1">##</span>
-<span class="c1">##</span>
-<span class="c1">##</span>
+<span class="c1">##runThreadN，</span>
+<span class="c1">##runMode，</span>
+<span class="c1">##genomeDir，</span>
+<span class="c1">##genomeFastaFiles，</span>
+<span class="c1">##sjdbGTFfile，</span>
+<span class="c1">##sjdbOverhang，</span>
 
     <span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;#&gt; Genome Index DONE.&#34;</span>
 <span class="o">}</span>
@@ -377,7 +371,7 @@ first_index 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span clas
 <span class="nv">reads1</span><span class="o">=(</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">reads1</span><span class="p">[@]##*/</span><span class="si">}</span><span class="s2">&#34;</span><span class="o">)</span>
 <span class="nv">reads2</span><span class="o">=(</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">reads1</span><span class="p">[@]/_1./_2.</span><span class="si">}</span><span class="s2">&#34;</span><span class="o">)</span>
 
-<span class="c1">###样品reads pair-end fastq必须是以&#34;_1.*&#34;或&#34;_2.*&#34;结尾，如&#34;gill01_1.fastq.gz&#34;,&#34;gill01_2.fastq.gz&#34;</span>
+<span class="c1">##样品reads pair-end fastq必须是以&#34;_1.*&#34;或&#34;_2.*&#34;结尾，如&#34;gill01_1.fastq.gz&#34;,&#34;gill01_2.fastq.gz&#34;</span>
 
 <span class="c1"># 开始比对</span>
 
@@ -470,7 +464,6 @@ first_align 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span clas
 </span><span class="lnt">57
 </span><span class="lnt">58
 </span><span class="lnt">59
-</span><span class="lnt">60
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/bash -x
@@ -505,7 +498,6 @@ two-pass_index<span class="o">(){</span>
 </span><span class="se"></span>        --sjdbOverhang <span class="m">149</span>
 
 	<span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;#&gt; 2-pass index DONE.&#34;</span>
-
 <span class="o">}</span>
 
 two-pass_index 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> tee <span class="nv">$LOGFILE</span>

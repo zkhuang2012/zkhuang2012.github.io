@@ -8,7 +8,7 @@
 ## 1st, 前期准备
 ```shell
 # 部署工作环境
-mkdir -p ${HOME}/project/mRNA/{bin,data/{genes,genome,index,samples},output/{ballgown,hisat2,tmp}}
+mkdir -p ${HOME}/project/mRNA/{bin,data/{genes,genome,index,samples},output}
 
 ##bin，存放分析脚本
 ##data/genes，存放基因组gff
@@ -50,7 +50,6 @@ WRKDIR="${BASEDIR}/output"
 INDEX_TP=`ls ${WORKDIR}/*SJ.out.tab`
 LOGFILE=${WRKDIR}/star_align.log
 
-
 ##NUMCPUS 使用CPU数，根据计算资源调整；
 ##THREADS，线程数为CPU数x2
 ##BASEDIR，proj基本目录
@@ -60,16 +59,13 @@ LOGFILE=${WRKDIR}/star_align.log
 ##GENOMEIDXDIR，基因组ref的index路径
 ##GENOMEIDX_TPDIR，基因组ref的index路径
 ##WRKDIR，proj输出目录
-##INDEX_TP
-##LOGFILE
-
-stime=`date +"%Y-%m-%d %H:%M:%S"`
-
+##INDEX_TP，基因组two pass的index路径
+##LOGFILE，日志文件
 
 set -e
 #set -x
 SCRIPTARGS="$@"
-
+stime=`date +"%Y-%m-%d %H:%M:%S"`
 
 # 将基因组注释文件gff3转为gtf
 
@@ -91,11 +87,12 @@ first_index(){
     --sjdbGTFfile ${GTFFILE} \
     --sjdbOverhang 149
 
-##
-##
-##
-##
-##
+##runThreadN，
+##runMode，
+##genomeDir，
+##genomeFastaFiles，
+##sjdbGTFfile，
+##sjdbOverhang，
 
     echo [$stime] "#> Genome Index DONE."
 }
@@ -107,7 +104,7 @@ reads1=(${FASTQLOC}/*_1.*)
 reads1=("${reads1[@]##*/}")
 reads2=("${reads1[@]/_1./_2.}")
 
-###样品reads pair-end fastq必须是以"_1.*"或"_2.*"结尾，如"gill01_1.fastq.gz","gill01_2.fastq.gz"
+##样品reads pair-end fastq必须是以"_1.*"或"_2.*"结尾，如"gill01_1.fastq.gz","gill01_2.fastq.gz"
 
 # 开始比对
 
@@ -173,7 +170,6 @@ two-pass_index(){
         --sjdbOverhang 149
 
 	echo [$stime] "#> 2-pass index DONE."
-
 }
 
 two-pass_index 2>&1 | tee $LOGFILE
