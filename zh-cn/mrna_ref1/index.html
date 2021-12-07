@@ -33,7 +33,7 @@
                 "url": "https:\/\/zkhuang2012.github.io\/cover.png",
                 "width":  800 ,
                 "height":  600 
-            },"genre": "posts","keywords": "RNA-seq, HISAT2, DESeq2, clusterProfiler","wordcount":  1698 ,
+            },"genre": "posts","keywords": "RNA-seq, HISAT2, DESeq2, clusterProfiler","wordcount":  1955 ,
         "url": "https:\/\/zkhuang2012.github.io\/zh-cn\/mrna_ref1\/","datePublished": "2020-05-08T21:30:50+08:00","dateModified": "2020-05-08T21:30:50+08:00","publisher": {
                 "@type": "Organization",
                 "name": "zkhuang's Blog",
@@ -125,7 +125,7 @@
                                 <i class="far fa-folder fa-fw"></i>转录组
                             </a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2020-05-08>2020-05-08</time>&nbsp;
-                <i class="fas fa-pencil-alt fa-fw"></i>约 1698 字&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>约 1955 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>预计阅读 4 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static">
                 <div class="details-summary toc-title">
@@ -144,7 +144,14 @@
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="介绍">介绍</h2>
-<p>本篇记录转录组有参分析是基于HISAT2 + Stringtie + DESeq2 + clusterProfiler。</p>
+<p>常规转录组分析：<strong>数据指控（QC）-&gt; 比对（Alignment）-&gt; 定量（Quantity）-&gt; 差异基因分析（DEG）-&gt; 功能富集（Enrichment）</strong></p>
+<p>本篇记录的转录组有参分析流程主要包括：</p>
+<ul>
+<li>HISAT2（比对）</li>
+<li>Stringtie（定量）</li>
+<li>DESeq2（差异分析）</li>
+<li>clusterProfiler（富集分析）</li>
+</ul>
 <h2 id="1st-前期准备">1st, 前期准备</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -298,11 +305,14 @@ ln -s /path-to-reference-genome/ref.gff <span class="si">${</span><span class="n
 </span><span class="lnt">91
 </span><span class="lnt">92
 </span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span><span class="lnt">97
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/bash -x
-</span><span class="cp"></span>
-<span class="c1"># 环境参数配置</span>
+</span><span class="cp"></span><span class="c1"># 环境参数配置</span>
 <span class="nv">NUMCPUS</span><span class="o">=</span><span class="m">28</span>
 <span class="nv">THREADS</span><span class="o">=</span><span class="sb">`</span>expr <span class="si">${</span><span class="nv">NUMCPUS</span><span class="si">}</span> <span class="se">\*</span> 2<span class="sb">`</span>
 <span class="nv">BASEDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/project/mRNA&#34;</span>
@@ -373,7 +383,6 @@ hisat2-build -p <span class="si">${</span><span class="nv">THREADS</span><span c
 </span><span class="se"></span>		-S <span class="si">${</span><span class="nv">TEMPLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.sam 2&gt;<span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.alnstats
 
 <span class="c1">##-p，设置线程数</span>
-<span class="c1">##--dta,</span>
 <span class="c1">##--x，指定基因组index</span>
 <span class="c1">##--1，输入reads1.fastq</span>
 <span class="c1">##--2，输入reads2.fastq</span>
@@ -389,6 +398,12 @@ hisat2-build -p <span class="si">${</span><span class="nv">THREADS</span><span c
 </span><span class="se"></span>		-G <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> <span class="se">\
 </span><span class="se"></span>		-o <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.gtf <span class="se">\
 </span><span class="se"></span>		-l <span class="si">${</span><span class="nv">sample</span><span class="si">}</span> <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.bam
+
+<span class="c1">##-p，</span>
+<span class="c1">##-G，</span>
+<span class="c1">##-o，</span>
+<span class="c1">##-l，</span>
+
 
 <span class="k">done</span>
 
@@ -461,8 +476,7 @@ hisat2-build -p <span class="si">${</span><span class="nv">THREADS</span><span c
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/bash -x
-</span><span class="cp"></span>
-<span class="c1"># 环境参数配置</span>
+</span><span class="cp"></span><span class="c1"># 环境参数配置</span>
 <span class="nv">NUMCPUS</span><span class="o">=</span><span class="m">28</span>
 <span class="nv">THREADS</span><span class="o">=</span><span class="sb">`</span>expr <span class="si">${</span><span class="nv">NUMCPUS</span><span class="si">}</span> <span class="se">\*</span> 2<span class="sb">`</span>
 <span class="nv">BASEDIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/project/mRNA&#34;</span>
@@ -479,6 +493,7 @@ hisat2-build -p <span class="si">${</span><span class="nv">THREADS</span><span c
 
 <span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;#&gt; START: STRINGTIE Estimation&#34;</span>
 
+<span class="c1"># 转录本重构</span>
 <span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;#&gt; Merge all transcripts (StringTie)&#34;</span>
 
 ls -1 <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/*.gtf &gt; <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/mergelist.txt
@@ -487,11 +502,12 @@ stringtie --merge <span class="se">\
 </span><span class="se"></span>	-p <span class="nv">$NUMCPUS</span> <span class="se">\
 </span><span class="se"></span>	-G  <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> <span class="se">\
 </span><span class="se"></span>	-o <span class="si">${</span><span class="nv">STRINGTIELOC</span><span class="si">}</span>/stringtie_merged.gtf <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/mergelist.txt
-<span class="c1">##</span>
-<span class="c1">##</span>
-<span class="c1">##</span>
-<span class="c1">##</span>
 
+<span class="c1">##--merge，Transcript merge mode,StringTie takes as input a list of GTF/GFF files and merges/assembles these transcripts into a non-redundant set of transcripts. </span>
+<span class="c1">##-G，基因组ref的gtf文件,StringTie will assemble the transfrags from the input GTF files with the reference transcripts.</span>
+<span class="c1">##-o，指定输出样品gtf文件</span>
+
+<span class="c1"># 转录本定量</span>
 <span class="nb">echo</span> <span class="o">[</span><span class="nv">$stime</span><span class="o">]</span> <span class="s2">&#34;#&gt; Estimate abundance for each sample (StringTie)&#34;</span>
 
 <span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span> i&lt;<span class="o">=</span><span class="si">${#</span><span class="nv">reads1</span><span class="p">[@]</span><span class="si">}</span>-1<span class="p">;</span> i++ <span class="o">))</span><span class="p">;</span> <span class="k">do</span>
@@ -503,19 +519,18 @@ stringtie --merge <span class="se">\
 		mkdir -p <span class="si">${</span><span class="nv">STRINGTIELOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>
 	<span class="k">fi</span>
 
-<span class="c1"># 转录本定量</span>
 	stringtie -e -B <span class="se">\
 </span><span class="se"></span>		-p <span class="nv">$NUMCPUS</span> <span class="se">\
 </span><span class="se"></span>		-G <span class="si">${</span><span class="nv">GTFFILE</span><span class="si">}</span> <span class="se">\
 </span><span class="se"></span>		-o <span class="si">${</span><span class="nv">STRINGTIELOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.gtf <span class="si">${</span><span class="nv">ALIGNLOC</span><span class="si">}</span>/<span class="si">${</span><span class="nv">sample</span><span class="si">}</span>.bam
 
-<span class="c1">##</span>
-<span class="c1">##</span>
-<span class="c1">##</span>
+<span class="c1">##-e，expression estimation mode; this limits the processing of read alignments to estimating the coverage of the transcripts given with the -G option</span>
+<span class="c1">##-B，enables the output of Ballgown input table files (*.ctab) containing coverage data for the reference transcripts given with the -G option. </span>
+
 
 <span class="k">done</span>
 
-<span class="c1"># 基于transcript_count_matrix.csv和gene_count_matrix.csv提取read count矩阵</span>
+<span class="c1"># 提取read count矩阵</span>
 
 python2 /public/tools/rna_seq/stringtie-1.3.4/prepDE.py -l <span class="m">150</span>
 

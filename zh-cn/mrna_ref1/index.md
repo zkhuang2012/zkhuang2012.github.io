@@ -3,7 +3,13 @@
 
 ## 介绍
 
-本篇记录转录组有参分析是基于HISAT2 + Stringtie + DESeq2 + clusterProfiler。
+常规转录组分析：**数据指控（QC）-> 比对（Alignment）-> 定量（Quantity）-> 差异基因分析（DEG）-> 功能富集（Enrichment）**
+
+本篇记录的转录组有参分析流程主要包括：
+- HISAT2（比对）
+- Stringtie（定量）
+- DESeq2（差异分析）
+- clusterProfiler（富集分析）
 
 ## 1st, 前期准备
 ```shell
@@ -37,7 +43,6 @@ done
 ## 2nd, 比对
 ```shell
 #!/bin/bash -x
-
 # 环境参数配置
 NUMCPUS=28
 THREADS=`expr ${NUMCPUS} \* 2`
@@ -109,7 +114,6 @@ for ((i=0; i<=${#reads1[@]}-1; i++ )); do
 		-S ${TEMPLOC}/${sample}.sam 2>${ALIGNLOC}/${sample}.alnstats
 
 ##-p，设置线程数
-##--dta,
 ##--x，指定基因组index
 ##--1，输入reads1.fastq
 ##--2，输入reads2.fastq
@@ -126,6 +130,12 @@ for ((i=0; i<=${#reads1[@]}-1; i++ )); do
 		-o ${ALIGNLOC}/${sample}.gtf \
 		-l ${sample} ${ALIGNLOC}/${sample}.bam
 
+##-p，
+##-G，
+##-o，
+##-l，
+
+
 done
 
 echo [$stime] "#> Step Two : Alignment Finished!"
@@ -135,7 +145,6 @@ echo [$stime] "#> Step Two : Alignment Finished!"
 
 ```shell
 #!/bin/bash -x
-
 # 环境参数配置
 NUMCPUS=28
 THREADS=`expr ${NUMCPUS} \* 2`
@@ -153,6 +162,7 @@ stime=`date +"%Y-%m-%d %H:%M:%S"`
 
 echo [$stime] "#> START: STRINGTIE Estimation"
 
+# 转录本重构
 echo [$stime] "#> Merge all transcripts (StringTie)"
 
 ls -1 ${ALIGNLOC}/*.gtf > ${ALIGNLOC}/mergelist.txt
@@ -161,11 +171,12 @@ stringtie --merge \
 	-p $NUMCPUS \
 	-G  ${GTFFILE} \
 	-o ${STRINGTIELOC}/stringtie_merged.gtf ${ALIGNLOC}/mergelist.txt
-##
-##
-##
-##
 
+##--merge，Transcript merge mode,StringTie takes as input a list of GTF/GFF files and merges/assembles these transcripts into a non-redundant set of transcripts. 
+##-G，基因组ref的gtf文件,StringTie will assemble the transfrags from the input GTF files with the reference transcripts.
+##-o，指定输出样品gtf文件
+
+# 转录本定量
 echo [$stime] "#> Estimate abundance for each sample (StringTie)"
 
 for ((i=0; i<=${#reads1[@]}-1; i++ )); do
@@ -177,19 +188,18 @@ for ((i=0; i<=${#reads1[@]}-1; i++ )); do
 		mkdir -p ${STRINGTIELOC}/${sample}
 	fi
 
-# 转录本定量
 	stringtie -e -B \
 		-p $NUMCPUS \
 		-G ${GTFFILE} \
 		-o ${STRINGTIELOC}/${sample}/${sample}.gtf ${ALIGNLOC}/${sample}.bam
 
-##
-##
-##
+##-e，expression estimation mode; this limits the processing of read alignments to estimating the coverage of the transcripts given with the -G option
+##-B，enables the output of Ballgown input table files (*.ctab) containing coverage data for the reference transcripts given with the -G option. 
+
 
 done
 
-# 基于transcript_count_matrix.csv和gene_count_matrix.csv提取read count矩阵
+# 提取read count矩阵
 
 python2 /public/tools/rna_seq/stringtie-1.3.4/prepDE.py -l 150
 
